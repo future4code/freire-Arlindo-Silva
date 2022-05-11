@@ -52,7 +52,7 @@ console.log(listaDeTarefas);
 
 // DESAFIOS
 
-1.
+// 1.
 
 let frase = prompt(`Digite uma frase:`);
 frase = frase.split(` `)
