@@ -64,8 +64,4 @@ console.log(frase);
 let frutas = ["Banana", "Morango", "Abacaxi", "Laranja", "Ameixa"]
 
 console.log(frutas);
-console.log(frutas.indexOf("Abacaxi"))
-
-
-
-
+console.log(`Indice da palavra Abacaxi é: ${frutas.indexOf("Abacaxi")}, tamanho do Array: ${frutas.length}`)
