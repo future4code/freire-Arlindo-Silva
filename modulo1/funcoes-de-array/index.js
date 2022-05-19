@@ -130,12 +130,11 @@ console.log(nomesPokemon);
 
 //  b.
 
-const tiposPokemon = pokemons.map(item =>{
+let tiposPokemon = pokemons.map(item =>{
     return item.tipo
 }).sort(function (a, b){
     return a.localeCompare(b)
 })
+tiposPokemon = [...new Set(tiposPokemon)]
 
-const novoTiposArray = [...new Set(tiposPokemon)]
-
-console.log(novoTiposArray);
+console.log(tiposPokemon);
