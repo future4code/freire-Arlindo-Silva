@@ -178,7 +178,7 @@ function retornaArrayOrdenadoPorData(consultas) {
  }
     const formatarDataParaOriginal = (item) => {
         let data = item.dataDaConsulta
-        let dataOriginal = (`0` + (data.getDate())).slice(-2) + "/" + (`0` + (data.getMonth() + 1)) + "/" + data.getFullYear()
+        let dataOriginal = (`0` + (data.getDate())).slice(-2) + "/" + (`0` + (data.getMonth() + 1)).slice(-2) + "/" + data.getFullYear()
         return dataOriginal
     }
     return consultas.map(item=>{
