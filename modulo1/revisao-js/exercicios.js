@@ -158,10 +158,43 @@ function retornaContasComSaldoAtualizado(contas) {
 
 // EXERCÍCIO 15A
 function retornaArrayOrdenadoAlfabeticamente(consultas) {
-  
+    return consultas.sort(function(a,b) {
+        if (a.nome < b.nome) {
+            return -1
+        } else {
+            return true
+        }
+    })
 }
 
 // EXERCÍCIO 15B
 function retornaArrayOrdenadoPorData(consultas) {
-   
+//     var strData = "28/02/2015";
+//     var partesData = strData.split("/");
+//     var data = new Date(partesData[2], partesData[1] - 1, partesData[0]);
+//     if(data > new Date())
+//    alert("maior");
+
+    const formatarData = (item) => {
+        let strData = item.dataDaConsulta
+        let partesData = strData.split(`/`)
+        let data = new Date(partesData[2], partesData[1] - 1, partesData[0])
+        return data
+ }
+    const formatarDataParaOriginal = (item) => {
+        let data = item.dataDaConsulta
+        let dataOriginal = (`0` + (data.getDate())).slice(-2) + "/" + (`0` + (data.getMonth() + 1)) + "/" + data.getFullYear()
+        return dataOriginal
+    }
+    return consultas.map(item=>{
+    return {...item, dataDaConsulta: formatarData(item)}
+}).sort(function(a,b){
+        if(a.dataDaConsulta < b.dataDaConsulta){
+            return -1
+        } else{
+            return true
+        }
+    }).map(item=>{
+        return {...item, dataDaConsulta: formatarDataParaOriginal(item)}
+    })
 }
