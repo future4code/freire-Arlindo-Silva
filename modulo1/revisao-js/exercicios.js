@@ -43,7 +43,11 @@ function retornaNumerosPares(array) {
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
- 
+    return arrayPares = array.filter(item =>{
+        return item % 2 === 0
+    }).map(item =>{
+        return item * item
+    })
 }
 
 // EXERCÍCIO 06
