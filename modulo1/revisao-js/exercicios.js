@@ -169,11 +169,6 @@ function retornaArrayOrdenadoAlfabeticamente(consultas) {
 
 // EXERCÍCIO 15B
 function retornaArrayOrdenadoPorData(consultas) {
-//     var strData = "28/02/2015";
-//     var partesData = strData.split("/");
-//     var data = new Date(partesData[2], partesData[1] - 1, partesData[0]);
-//     if(data > new Date())
-//    alert("maior");
 
     const formatarData = (item) => {
         let strData = item.dataDaConsulta
