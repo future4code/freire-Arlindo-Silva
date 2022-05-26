@@ -6,13 +6,21 @@
     background-color: aqua;
 }
 
+p{
+    font-size: 20px;
+}
+
 .fundoDaTela{
     background-color: rgb(255, 255, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .cabecalho{
+    background-color: aquamarine;
     display: block;  
     text-align: center;;
+    padding: 20px;
+    margin-bottom: 10px;
 }
 
 img{
@@ -26,7 +34,10 @@ input{
 }
 
 .rodape{
-    padding-top: 200px;
+    background-color: aquamarine;
+    margin-top: 200px;
+    padding-top: 10px;
+    padding-bottom: 200px;
     text-align: center;
 }
 
@@ -40,5 +51,9 @@ nav{
 
 header{
     text-align: center;
-    background-color: aqua;
+}
+
+main{
+    font-size: 15px;
+    font-style: oblique;
 }
