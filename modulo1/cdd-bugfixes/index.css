@@ -17,6 +17,8 @@ h2 {
 }
 
 input {
+    border: 0px;
+    border-bottom: solid rgb(71, 68, 68);    
     height: 20px;
     width: 500px;
 }
