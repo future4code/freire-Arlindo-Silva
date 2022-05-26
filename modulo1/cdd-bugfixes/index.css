@@ -103,6 +103,7 @@ div:last-child {
 }
 
 table {
+    align-items: center;
     margin: auto;
     width: 60%;
     text-align: center;
@@ -132,6 +133,7 @@ td button:active{
 
 
 #back-button {
+    align-items: center;
     background-color: white;
     width: 100px;
     height: 20px;
@@ -139,7 +141,9 @@ td button:active{
     border-radius: 5px;
     font-size: 10px;
     color: black;
-    text-align: center;
+    position: fixed;
+    left: 0px;
+    right: 0px;
 }
 
 #back-button:hover {
