@@ -33,8 +33,9 @@ div>p:first-child {
     display: block;
 }
 
-div img {
-    background: black;
+.container-do-search img {
+    width: 12px;
+    height: 12px;
 }
 
 .botao-amarelo {
