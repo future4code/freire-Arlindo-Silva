@@ -167,3 +167,25 @@ h1{
     display: block;
     font-size: 60px;
 }
+
+#habilidades {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-top: 0px;
+    width: 624px;
+    height: 320px;
+    background-color: rgb(204, 239, 255);
+    
+}
+
+h4{
+    font-weight: 400;
+    padding-left: 60px;
+    padding-bottom: 5px;
+    font-style: oblique;
+}
