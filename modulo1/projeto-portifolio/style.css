@@ -45,11 +45,11 @@
 
 .botoesNavegacao {
     color: white;
+    font-weight: 600;
     border-bottom: 2px solid rgb(255, 255, 255);
     margin: 10px;
     padding-bottom: 5px;
     text-decoration:solid;    
-    background-color: rgb(160, 160, 160);
 }
 
 .botoesNavegacao:hover{
@@ -82,7 +82,7 @@ p{
     display: inline;
     position: absolute;
     font-style: italic;
-    font-weight: 170;
+    font-weight: 300;
     text-align: justify;
     padding: 10px;
     padding-left: 15px;
@@ -134,4 +134,36 @@ h1{
     width: 624px;
     height: 70px;
     background-color: rgb(204, 239, 255);
+}
+
+#projetos{
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 624px;
+    height: 480px;
+    background-color: rgb(204, 239, 255);
+
+}
+
+#projetos img{
+    width: 620px;
+}
+
+#projetos:hover{
+    background-color: rgb(146, 221, 255);
+}
+
+#projetos h1{
+    width: 570px;
+    height: 80px;
+    opacity: 100%;
+    text-align: center;
+    color: black;
+    display: block;
+    font-size: 60px;
 }
