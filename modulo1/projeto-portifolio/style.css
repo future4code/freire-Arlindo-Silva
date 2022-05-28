@@ -5,22 +5,23 @@
 }
 
 .cabecalho{
-    text-align: left;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    text-align: center;
     padding-left: 20px;
+    padding: 10px;
     background-color: #cac9c9;
-    color: white;
+    color: rgb(255, 255, 255);
     position: relative;
 }
 .cabecalho h1, h5{
     display: inline;
 }
 
+.cabecalho img{
+    width: 620px;
+}
+
 .rodape{
-    position: fixed;
     width: 100%;
-    bottom: 0px;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -28,19 +29,25 @@
     margin-top: 50px;
     background-color: #cac9c9;
     color: white;
+    font-size: 30px;
 }
 
 .menu{
-    position: absolute;
-    right:15px;
-    bottom: 25px;
-    display: inline-block;
+    text-align: right;
+    padding: 10px;
+    padding-bottom: 15px;
+    padding-right: 20px;
+    display: block;
+    font-size: 20px;
+    opacity: 80%;
+    background-color: rgb(160, 160, 160);
 }
 
 .botoesNavegacao {
-    color: rgb(255, 255, 255);
-    border: 2px solid rgb(255, 255, 255);
-    padding: 2px 5px 2px 5px;
+    color: white;
+    border-bottom: 2px solid rgb(255, 255, 255);
+    margin: 10px;
+    padding-bottom: 5px;
     text-decoration:solid;    
     background-color: rgb(160, 160, 160);
 }
@@ -54,13 +61,77 @@
 }
 
 #apresentacao{
-    margin: 0;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
     margin-top: 20px;
     margin-left: 20px;
     margin-bottom: 20px;
     padding: 10px;
-    text-align: center;
-    width: 600px;
-    height: 400px;
+    width: 930px;
+    height: 182px;
+    background-color: rgb(204, 239, 255);
+}
+
+div > li{
+    font-style: italic;
+    font-size: 20px;
+}
+
+p{
+    display: inline;
+    position: absolute;
+    font-style: italic;
+    font-weight: 170;
+    text-align: justify;
+    padding: 10px;
+    padding-left: 15px;
+    font-size: 20px;
+    list-style-position: inside;
+}
+
+#foto{
+    display: inline-block;
+}
+
+#foto img{
+    width: 180px;
+    height: 180px;
+    text-align: left;
+}
+
+#video{
+    text-align: right;
+    width: 330px;
+    height: 182px;
+    font-style: oblique;
+    position: relative;
+    vertical-align: top;
+    right: 10px;
+    top: 10px;
+    display: inline-block;
     background-color: aliceblue;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+
+}
+
+h1{
+    color: rgb(160, 160, 160);
+    margin: 24px;
+}
+
+#vida-academica{
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 624px;
+    height: 70px;
+    background-color: rgb(204, 239, 255);
 }
