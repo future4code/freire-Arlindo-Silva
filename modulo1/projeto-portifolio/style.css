@@ -213,6 +213,11 @@ img[type=logo]{
     margin-left: 80px;
     padding: ;
 }
+img[type=projeto]{
+    width: 600px;
+    margin: 20px;
+    border: 2px solid rgb(82, 82, 82);
+}
 
 .rodape{
     width: 100%;
