@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+header{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 50px;
+    background-color: mediumvioletred;
+}
+
+
+
+.logo{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+}
+
+.logo-img{
+    width: 20px;
+    height: 20px;
+    padding-right: 15px;
+}
+
+.corpo{
+    display: flex;
+    align-items: stretch;
+}
+
+.corpo > aside{
+    background-color: #f2d0e0;
+    width: 40%;
+}
+
+.navegacao{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-top: 15px;
+    align-items: flex-start;
+}
+
+footer{
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    height: 50px;
+    background-color: mediumvioletred;
+}
+
+header button{
+    width: 50px;
+}
+
+main img{
+    width: 230px;
+    height: 230px;
+    padding-bottom: 5px;
+}
+
+main{
+    font-size: 13px;
+    display: flex;
+    padding: 7px;
+    flex-wrap: wrap;
+}
+
+main > div{
+    width: 230px;
+    margin: 7px;
+    text-align: center;
+    box-shadow: 2px 2px 4px darkgray;
+}
+main h2, main p{
+    padding-bottom: 10px;
+}
