@@ -8,8 +8,8 @@
 
 header{
     height: 8vh;
-    display: grid;
-    grid-template-columns: 1fr 150px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: rgb(141, 141, 141);
     padding: 0px 10px;
@@ -61,13 +61,13 @@ input{
 }
 .midia{
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 50px 2fr;
     justify-content: center;
     align-items: center;
     margin-bottom: 130px;
 }
 
 video{
-    width: 600px;
+    width: 640px;
 
 }
