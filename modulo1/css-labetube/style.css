@@ -7,13 +7,14 @@
 }
 
 header{
-    width: 100%;
-    height: 8vh;
+    width: 100vw;
+    height: 50px;
     display: flex;
+    padding-left: 10px;
+    padding-right: 50px;
     justify-content: space-between;
     align-items: center;
     background-color: rgb(141, 141, 141);
-    padding: 0px 10px;
     box-shadow: 2px 2px 2px silver;
     font-size: 12px;
     color: rgb(51, 51, 51);
@@ -21,6 +22,11 @@ header{
     top: 0;
 
 
+}
+#logo-marca{
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
 }
 .inicio{
     display: grid;
@@ -35,7 +41,7 @@ header{
 footer{
     background-color: rgb(141, 141, 141);
     color: rgb(51, 51, 51);
-    height: 8vh;
+    height: 50px;
     width: 100vw;
     text-align: center;
     font-size: 18px;
@@ -62,13 +68,12 @@ footer{
     font-size: 15px;
 }
 img{
-    background-color: antiquewhite;
     width: 100%;
     height: 100%;
 }
 input{
+    width: 25vw;
     padding: 3px;
-    margin-right: 20px;
     border-radius: 10px;
     border: 1px solid silver;
 }
@@ -95,12 +100,30 @@ body{
     min-height: 100vh;
 }
 
+section{
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    padding-right: 20px;
+    gap: 3px;
+    align-items: center;
+}
+
+img[type=logo]{
+    width: 25px;
+    height: 25px;
+    padding-right: 15px;
+    position: relative;
+    bottom: 0;
+    opacity: 70%;
+}
+
 @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
     /* celulares */
     .inicio, .midia{
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr;
         max-width: 90vw;
+        max-height: 40vh;
     }
     #desktop{
         display:none;
@@ -108,6 +131,7 @@ body{
     #mobile{
         display:flex;
     }
+    
 }
 
     
