@@ -2,6 +2,8 @@ import React from 'react';
 import FotoPerfil from "./img/perfil.jpg";
 import LogoRchlo from "./img/rchlo.png";
 import LogoTransportes from "./img/transportes.jpg";
+import LogoUesc from "./img/uesc.png";
+import LogoLabenu from "./img/labenu.png";
 import Seta from "./img/seta.png";
 import EmailImg from "./img/email.png";
 import EnderecoImg from "./img/adress.jpg";
@@ -27,8 +29,6 @@ const Titulo = styled.h2`
   margin-bottom: 20px;
 
 `
-
-
 
 function App() {
   return (
@@ -77,6 +77,21 @@ function App() {
       </Container>
 
       <Container>
+        <Titulo>Instituições de ensino</Titulo>
+        <CardGrande 
+          imagem={LogoUesc}
+          nome="UESC" 
+          descricao="Licenciatura em Matemática" 
+        />
+        
+        <CardGrande 
+          imagem={LogoLabenu}
+          nome="Labenu" 
+          descricao="Web Full Stack" 
+        />
+      </Container>
+
+      <Container>
         <Titulo>Minhas redes sociais</Titulo>
         <ImagemButton 
           imagem="https://d2v9ipibika81v.cloudfront.net/uploads/sites/261/2017/01/facebook-logo-3.png" 
@@ -88,6 +103,7 @@ function App() {
           texto="Twitter" 
         />        
       </Container>
+
     </AppStyle>
   );
 }
