@@ -57,7 +57,8 @@ class Post extends React.Component {
     compartilhando: false,
     numeroComentarios: 0,
     salvo: false,
-    compartilhado: false
+    compartilhado: false,
+    comentarios: []
   }
 
   onClickCurtida = () => {
@@ -90,18 +91,24 @@ class Post extends React.Component {
     this.setState({
       comentando: !this.state.comentando
     })
+    if(this.state.compartilhando){
+      this.setState({compartilhando: false})
+    }
+
   }
 
   onClickCompartilhar = () => { 
     this.setState({
-      compartilhando: !this.state.compartilhando
+      compartilhando: !this.state.compartilhando,
     })
+    if(this.state.comentando){
+      this.setState({comentando: false})
+    }
   }
 
 
   aoEnviarComentario = () => {
     this.setState({
-      comentando: false,
       numeroComentarios: this.state.numeroComentarios + 1
     })
   }

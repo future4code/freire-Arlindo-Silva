@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
 import Post from './components/Post/Post';
-import foto from './img/foto.jpg'
 
 const MainContainer = styled.div`
   display: flex;
