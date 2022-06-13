@@ -4,12 +4,15 @@ import {Mensagem} from './Mensagem'
 
 const CampoDigitacao = styled.div`
     display: grid;
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: 15% 65% 15%;
+    justify-content: space-between;
 `
 
 const MensagemContainer = styled.div`
+    padding: 4px;
+    background-color: aliceblue;
     display: grid;
-    grid-template-rows: 1fr 20px;
+    grid-template-rows: 1fr 30px;
     min-height: 80vh;
     border: 1px solid black;
 
@@ -43,8 +46,7 @@ export class SecaoMensagem extends React.Component {
         this.setState({
             mensagens: novaMensagens,
             inputMensagem: ""
-        })
-        
+        })  
     }
 
 
