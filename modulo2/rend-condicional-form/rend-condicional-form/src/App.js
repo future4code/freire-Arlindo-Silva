@@ -12,7 +12,8 @@ const Secao = styled.form`
 export default class App extends React.Component {
   state = {
     etapa: 1,
-    opcao: "Ensino médio incompleto"
+    opcao: "Ensino médio incompleto",
+    respostas: false
   }
 
   onSelect = (event) => {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
 
   aoClicarBotao1 = () => {
     let novaEtapa
-    switch (this.state.opcao) {
+      switch (this.state.opcao) {
       case "Ensino superior incompleto":
         novaEtapa = 2
         this.setState({etapa: novaEtapa})
@@ -41,19 +42,23 @@ export default class App extends React.Component {
         break; 
       default:
         break;
-    }
+      }
   }
 
   aoClicarBotao = () => {
-    const novaEtapa = this.state.etapa + 1
+    const novaEtapa = 4
     this.setState({etapa: novaEtapa})
+  }
+
+  respostas = () => {
+    this.setState({respostas:true})
   }
 
   render(){
     let secao
     switch (this.state.etapa) {
       case 1: 
-        secao = <Etapa1 aoClicar={this.aoClicarBotao1} onSelect={this.onSelect}/>
+        secao = <Etapa1 aoClicar={this.aoClicarBotao1} onSelect={this.onSelect} respostas={this.respostas}/>
         break;
       case 2:
         secao = <Etapa2 aoClicar={this.aoClicarBotao}/>
