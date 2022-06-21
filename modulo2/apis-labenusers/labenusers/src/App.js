@@ -9,10 +9,23 @@ export default class App extends React.Component{
     users: [],
     name: "",
     email: "",
-    home: true
+    home: true,
+    header: {
+      Authorization: "arlindo-silva-freire"
+    }
   }
 
+  updateList = () => {
+    axios.get("https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users", {
+      headers: this.state.header
+    }).then((resposta) => {
+      this.setState({users: resposta.data})
+    })
+  }
 
+  componentDidMount = () => {
+    this.updateList()
+  }
 
   changeScreen = () => {
     this.setState({home: !this.state.home})
@@ -32,17 +45,28 @@ export default class App extends React.Component{
       email: this.state.email
     }
     axios.post("https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users", body, {
-      headers: {
-        Authorization: "arlindo-silva-freire"
-      }
+      headers: this.state.header
     }).then((resposta) => {
-      alert("Criado")
+      this.updateList()
+      alert("criado novo usuario")
       console.log(resposta.data);
     }).catch((error) => {
-      alert("Error")
+      alert("não foi criado novo usuario")
       console.log(error.message)
-    })
-  } 
+    })    
+  }
+  
+  onClickRemove = (id) => {
+    axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, {
+      headers: this.state.header
+    }).then((resposta) => {
+      this.updateList()
+      alert("usuario removido")
+    }).catch((error) => {
+      alert("usuario não foi removido devido a um erro")
+    })  
+  }
+  
   render() {
     let section
     if(this.state.home === true){
@@ -60,6 +84,8 @@ export default class App extends React.Component{
       return (
         <Users 
         changeScreen={this.changeScreen}
+        users={this.state.users}
+        onClickRemove={this.onClickRemove}
         />
       )
     }
