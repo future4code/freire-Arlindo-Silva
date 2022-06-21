@@ -3,17 +3,22 @@ import './App.css';
 import CreatUser from './components/CreatUser';
 import Users from './components/Users';
 import axios from "axios";
+import UsersDetails from './components/UserDetails';
 
 export default class App extends React.Component{
   state = {
     users: [],
+    userID: "",
+    userDetails: {},
     name: "",
     email: "",
-    home: true,
+    screen: "create",
     header: {
       Authorization: "arlindo-silva-freire"
     }
   }
+
+  
 
   updateList = () => {
     axios.get("https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users", {
@@ -23,12 +28,25 @@ export default class App extends React.Component{
     })
   }
 
+  getUserDetails = (id) => {
+    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, {
+      headers: this.state.header
+    }).then((resposta) => {
+      this.setState({userDetails: resposta.data})
+    })
+  }
+
   componentDidMount = () => {
     this.updateList()
   }
 
-  changeScreen = () => {
-    this.setState({home: !this.state.home})
+  componentDidUpdate = () => {
+    this.updateList()
+  }
+
+  changeScreen = (screen) => {
+    const newScreen = screen
+    this.setState({screen: newScreen})
   }
 
   onChangeName = (ev) => {
@@ -49,48 +67,64 @@ export default class App extends React.Component{
     }).then((resposta) => {
       this.updateList()
       alert("criado novo usuario")
-      console.log(resposta.data);
+      this.setState({name: "", email: ""})
     }).catch((error) => {
       alert("não foi criado novo usuario")
-      console.log(error.message)
     })    
+  }
+
+  onClickUser = (id) => {
+    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, {
+      headers: this.state.header
+    }).then((resposta) => {
+      this.setState({userDetails: resposta.data, screen: "user"})
+    })
   }
   
   onClickRemove = (id) => {
-    axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, {
-      headers: this.state.header
-    }).then((resposta) => {
-      this.updateList()
-      alert("usuario removido")
-    }).catch((error) => {
-      alert("usuario não foi removido devido a um erro")
-    })  
+    if (window.confirm("Quer mesmo deletar?") === true) {
+      axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`, {
+        headers: this.state.header
+      }).then((resposta) => {
+        this.updateList()
+        alert("usuario removido")
+        this.setState({screen: "users"})
+      }).catch((error) => {
+        alert("usuario não foi removido devido a um erro")
+      })    
+    }
   }
   
   render() {
-    let section
-    if(this.state.home === true){
-      return (
-        <CreatUser
-        name={this.state.name}
-        onChangeName={this.onChangeName}
-        email={this.state.email}
-        onChangeEmail={this.onChangeEmail}
-        onClickSend={this.onClickSend}
-        changeScreen={this.changeScreen}
-        />
-    )
-    }else{
-      return (
-        <Users 
-        changeScreen={this.changeScreen}
-        users={this.state.users}
-        onClickRemove={this.onClickRemove}
-        />
+    switch (this.state.screen) {
+      case "create":
+        return (
+          <CreatUser
+          name={this.state.name}
+          onChangeName={this.onChangeName}
+          email={this.state.email}
+          onChangeEmail={this.onChangeEmail}
+          onClickSend={this.onClickSend}
+          changeScreen={this.changeScreen}
+          />
       )
-    }
-      return(
-        {section}
-      );
+      case "users":
+        return (
+          <Users 
+          changeScreen={this.changeScreen}
+          users={this.state.users}
+          onClickRemove={this.onClickRemove}
+          onClickUser={this.onClickUser}
+          />
+        )
+      case "user":
+        return (
+          <UsersDetails
+          changeScreen={this.changeScreen}
+          user={this.state.userDetails}
+          onClickRemove={this.onClickRemove}
+          />
+        )
+      }
   }
 }

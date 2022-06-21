@@ -6,7 +6,8 @@ import axios from "axios";
 export default class CreatUser extends React.Component{
     render() {
         return(
-            <div>
+            <div>                
+                <div><button onClick={() => {this.props.changeScreen("users")}}>Ir para lista de Usuarios</button></div>
                 <h3>Criar novo Usuario:</h3>
                 <label htmlFor="nome">Nome:</label>
                 <input
@@ -22,10 +23,7 @@ export default class CreatUser extends React.Component{
                 placeholder="digite email"
                 onChange={this.props.onChangeEmail} 
                 />
-                <button onClick={this.props.onClickSend}>Criar</button>
-                
-                <div><button onClick={this.props.changeScreen}>Ir para lista de Usuarios</button></div>
-                
+                <button onClick={this.props.onClickSend}>Criar</button>              
             </div>
         );
     }
