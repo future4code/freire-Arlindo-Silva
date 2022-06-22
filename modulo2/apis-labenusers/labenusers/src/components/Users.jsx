@@ -77,7 +77,9 @@ export default class Users extends React.Component{
                     id="search"
                     onChange={this.props.onChangeInputSearch}
                     value={this.props.inputSearch}                    
-                    type="text" />
+                    type="text"
+                    placeholder="Digite o nome de cadastro"
+                    />
                     <Button onClick={this.props.onClickSearch}>Pesquisar</Button>
                 </div>
                 <h3>Lista de Usuarios:</h3>
