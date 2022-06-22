@@ -33,7 +33,8 @@ const UsuarioName = styled.label`
 
 const Usuario = styled.div`
     width: 300px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 25px;
     justify-content: space-between;
     padding: 5px 10px;
     &:hover{
@@ -64,7 +65,7 @@ export default class Users extends React.Component{
         })
         .map(user =>{
             return (<div key={user.id}>
-            <Usuario>
+            <Usuario >
                 <UsuarioName 
                 onClick={() => {this.props.onClickUser(user.id)}}
                 >{user.name}</UsuarioName>
