@@ -63,8 +63,7 @@ export default class App extends React.Component{
   }
 
   changeScreen = (screen) => {
-    const newScreen = screen
-    this.setState({screen: newScreen})
+    this.setState({screen: screen, researched: ""})
   }
 
   onChangeName = (ev) => {

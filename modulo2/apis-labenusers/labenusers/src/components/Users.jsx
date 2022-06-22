@@ -8,14 +8,21 @@ const UsersContainer = styled.div`
     gap: 5px;
 `
 const Button = styled.button`
+    font-size: 13px;
+    padding: 3px 6px;
+    font-weight: bold;
     background-color: white;
     border: 1px solid black;
-    border-radius: 50px;
-    padding: 5px;
-    margin: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
     &:hover{
         background-color: #cacaca;
     }
+    &:active{
+        background-color: gray
+    }
+
 `
 
 const UsuarioName = styled.label`
@@ -24,18 +31,24 @@ const UsuarioName = styled.label`
 
 `
 
-const Usuario = styled.li`
+const Usuario = styled.div`
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
     padding: 5px 10px;
     &:hover{
         background-color: #cacaca;
         border-radius: 50px;
     }
+    &:active{
+        background-color: gray
+    }
     & button{
-        margin-left: 20px;
         background-color: #fa0000;
         color: white;
         border: 1px solid black;
         border-radius: 10px;
+        font-weight: bold;
     }
     & button:hover{
         opacity: 80%;
@@ -51,7 +64,7 @@ export default class Users extends React.Component{
                 <UsuarioName 
                 onClick={() => {this.props.onClickUser(user.id)}}
                 >{user.name}</UsuarioName>
-                <button onClick={() => {this.props.onClickRemove(user.id)}}>Remover</button>
+                <button onClick={() => {this.props.onClickRemove(user.id)}}>X</button>
             </Usuario>
         </div>
             )

@@ -18,14 +18,21 @@ const InputsNew = styled.div`
 `
 
 const Button = styled.button`
+    font-size: 13px;
+    padding: 3px 6px;
+    font-weight: bold;
     background-color: white;
     border: 1px solid black;
-    border-radius: 50px;
-    padding: 5px;
-    margin: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
     &:hover{
         background-color: #cacaca;
     }
+    &:active{
+        background-color: gray
+    }
+
 `
 
 export default class CreatUser extends React.Component{
