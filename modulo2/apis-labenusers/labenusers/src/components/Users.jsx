@@ -1,37 +1,75 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
+
+const UsersContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+`
+const Button = styled.button`
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50px;
+    padding: 5px;
+    margin: 5px;
+    &:hover{
+        background-color: #cacaca;
+    }
+`
+
+const UsuarioName = styled.label`
+    border: 0;
+    font-size: 18px;
+
+`
+
+const Usuario = styled.li`
+    padding: 5px 10px;
+    &:hover{
+        background-color: #cacaca;
+        border-radius: 50px;
+    }
+    & button{
+        margin-left: 20px;
+        background-color: #fa0000;
+        color: white;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+    & button:hover{
+        opacity: 80%;
+    }
+`
 
 
 export default class Users extends React.Component{
     render() {
         const usersMapeados = this.props.users.map(user =>{
             return (<div key={user.id}>
-            <li>
-                <input 
-                type="button" 
-                value={user.name}
+            <Usuario>
+                <UsuarioName 
                 onClick={() => {this.props.onClickUser(user.id)}}
-                />
+                >{user.name}</UsuarioName>
                 <button onClick={() => {this.props.onClickRemove(user.id)}}>Remover</button>
-            </li>
+            </Usuario>
         </div>
             )
         })
         return(
-            <div>                
-                <button onClick={() => {this.props.changeScreen("create")}}>Voltar</button>
+            <UsersContainer>                
+                <Button onClick={() => {this.props.changeScreen("create")}}>Voltar</Button>
                 <div>
-                    <input 
+                    <input
                     id="search"
                     onChange={this.props.onChangeInputSearch}
                     value={this.props.inputSearch}                    
                     type="text" />
-                    <button onClick={this.props.onClickSearch}>Pesquisar</button>
+                    <Button onClick={this.props.onClickSearch}>Pesquisar</Button>
                 </div>
                 <h3>Lista de Usuarios:</h3>
                 {usersMapeados}
-            </div>
+            </UsersContainer>
             
         );
     }

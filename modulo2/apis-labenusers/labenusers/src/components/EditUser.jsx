@@ -1,12 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
+
+const EditContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    & p{
+        margin: 5px;
+    }
+`
+const Button = styled.button`
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50px;
+    padding: 5px;
+    margin: 5px;
+    &:hover{
+        background-color: #cacaca;
+    }
+`
 
 
 export default class EditUser extends React.Component{
     render() {
         return(
-            <div>
+            <EditContainer>
                 <label htmlFor="name">Novo Nome:</label>
                 <input 
                 id="name"
@@ -19,7 +38,7 @@ export default class EditUser extends React.Component{
                 value={this.props.email}
                 onChange={this.props.onChangeEmail}
                 type="text" />
-            </div>
+            </EditContainer>
             
         );
     }

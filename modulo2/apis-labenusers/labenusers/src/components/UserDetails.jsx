@@ -3,6 +3,36 @@ import EditUser from "./EditUser";
 import styled from "styled-components";
 import axios from "axios";
 
+const UserContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    & p{
+        margin: 5px;
+    }
+`
+const Button = styled.button`
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50px;
+    padding: 5px;
+    margin: 5px;
+    &:hover{
+        background-color: #cacaca;
+    }
+`
+const RemoveButton = styled.button`
+    background-color: #fa0000;
+    color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    &:hover{
+        opacity: 80%;
+    }
+
+`
 
 export default class UsersDetails extends React.Component{
     state = {
@@ -49,22 +79,22 @@ export default class UsersDetails extends React.Component{
 
     render() {
         return(
-            <div>
-                <button onClick={() => {this.props.changeScreen("users")}}>Voltar</button>
-                <p>name: {this.state.nameScreen}</p>
-                <p>email: {this.state.emailScreen}</p>
-                <button onClick={() => {this.props.onClickRemove(this.props.user.id)}}>Remover</button>
+            <UserContainer>
+                <Button onClick={() => {this.props.changeScreen("users")}}>Voltar</Button>
+                <p>Nome: {this.state.nameScreen}</p>
+                <p>Email: {this.state.emailScreen}</p>
+                <RemoveButton onClick={() => {this.props.onClickRemove(this.props.user.id)}}>Remover</RemoveButton>
                 {this.state.edit ? (
-                <div>
+                <UserContainer>
                     <EditUser 
                     onEditUser={this.onEditUser} 
                     onChangeName={this.onChangeName} 
                     onChangeEmail={this.onChangeEmail}
                     />
-                    <button onClick={() => {this.editUser(this.props.user.id)}}>Salvar</button>
-                </div>
-                ) : <button onClick={this.onClickEdit}>Editar usuario</button>}
-            </div>
+                    <Button onClick={() => {this.editUser(this.props.user.id)}}>Salvar</Button>
+                </UserContainer>
+                ) : <Button onClick={this.onClickEdit}>Editar usuario</Button>}
+            </UserContainer>
             
         );
     }
