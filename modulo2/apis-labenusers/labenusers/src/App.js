@@ -15,10 +15,28 @@ export default class App extends React.Component{
     screen: "create",
     header: {
       Authorization: "arlindo-silva-freire"
-    }
+    },
+    search: "",
+    inputSearch: "",
+    researched: ""
   }
 
-  
+  onChangeInputSearch = (ev) => {
+    this.setState({inputSearch: ev.target.value})
+  }
+
+  onClickSearch = () =>{
+    console.log('clicou');
+    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/search?name=${this.state.inputSearch}&email=`, {
+      headers: this.state.header
+    }).then((resposta) => {
+      console.log("uhuh");
+      console.log(resposta.data);
+      const newSearch = resposta.data
+      this.setState({researched: newSearch})
+      console.log(this.state.researched);
+    })
+  }
 
   updateList = () => {
     axios.get("https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users", {
@@ -96,6 +114,14 @@ export default class App extends React.Component{
   }
   
   render() {
+    let showUsers
+    if (this.state.researched != "") {
+      showUsers = this.state.researched
+      console.log("entrou");
+    }else{
+      console.log("entrou no else");
+      showUsers = this.state.users
+    }
     switch (this.state.screen) {
       case "create":
         return (
@@ -112,9 +138,14 @@ export default class App extends React.Component{
         return (
           <Users 
           changeScreen={this.changeScreen}
-          users={this.state.users}
+          users={showUsers}
           onClickRemove={this.onClickRemove}
           onClickUser={this.onClickUser}
+          search={this.state.search}
+          onChangeInputSearch={this.onChangeInputSearch}
+          inputSearch={this.inputSearch}
+          onClickSearch={this.onClickSearch}
+          researched={this.state.researched}
           />
         )
       case "user":
