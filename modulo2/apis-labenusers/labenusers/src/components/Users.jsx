@@ -58,7 +58,11 @@ const Usuario = styled.div`
 
 export default class Users extends React.Component{
     render() {
-        const usersMapeados = this.props.users.map(user =>{
+        const usersMapeados = this.props.users
+        .sort((a, b) => {
+            return a.name.localeCompare(b.name)
+        })
+        .map(user =>{
             return (<div key={user.id}>
             <Usuario>
                 <UsuarioName 
