@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const HomeContainer = styled.div`
+export const CreateContainer = styled.div`
     max-height: 100vh;
     width: 100vw;
-    background-color: #fc6a00;
+    background-color: black;
     display: grid;
     grid-template-rows: 20vh 70vh 10vh;
     align-items: center;
@@ -21,10 +21,14 @@ export const HomeContainer = styled.div`
         margin-left: 10vw;
     }
     & label{
+        color: #fc6a00;
         padding-bottom: 15px;
         margin-left: 20px;
     }
     & label:hover{
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid #fc6a00;
+    }
+    &Footer{
+        color: #fc6a00;
     }
 `
