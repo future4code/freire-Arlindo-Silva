@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CreateContainer = styled.div`
     max-height: 100vh;
     width: 100vw;
-    background-color: black;
+    background-color: #6e2f02;
     display: grid;
     grid-template-rows: 20vh 70vh 10vh;
     align-items: center;
@@ -13,20 +13,24 @@ export const CreateContainer = styled.div`
         width: 70%;
     }
     & nav{
+        border-end-end-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: #fc6a00;
         justify-self: flex-start;
         font-size: 20px;
         font-weight: bold;
-        padding: 10px 0;
+        padding: 10px 5px;
         gap: 20px;
-        margin-left: 10vw;
+        padding-left: 10vw;
     }
     & label{
-        color: #fc6a00;
-        padding-bottom: 15px;
-        margin-left: 20px;
+        color: black;
+        padding-bottom: 5px;
+        margin: 0 20px;
     }
     & label:hover{
-        border-bottom: 2px solid #fc6a00;
+        opacity: 70%;
+        border-bottom: 2px solid black;
     }
     &Footer{
         color: #fc6a00;

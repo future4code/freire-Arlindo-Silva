@@ -10,9 +10,11 @@ export default class CreatePlaylist extends React.Component{
       <CreateContainer>
         <nav>
           <label onClick={() => {this.props.changeScreen("playlists")}}>Playlists</label>
-          <label onClick={() => {this.props.changeScreen("create")}}>Voltar</label>
+          <label onClick={() => {this.props.changeScreen("home")}}>Voltar</label>
         </nav>
-        <img src={logo} alt="" />          
+        <div>
+          
+        </div>          
         <Footer/>
       </CreateContainer>
 
