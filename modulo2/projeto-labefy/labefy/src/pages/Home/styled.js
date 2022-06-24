@@ -5,12 +5,12 @@ export const HomeContainer = styled.div`
     width: 100vw;
     background-color: #fc6a00;
     display: grid;
-    grid-template-rows: 20vh 70vh 10vh;
+    grid-template-rows: 20vh 60vh 20vh;
     align-items: center;
     text-align: center; 
     & img{
         justify-self: center;
-        width: 70%;
+        width: 60%;
     }
     & nav{
         justify-self: flex-start;

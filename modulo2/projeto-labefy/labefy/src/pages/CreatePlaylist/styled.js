@@ -5,7 +5,7 @@ export const CreateContainer = styled.div`
     width: 100vw;
     background-color: #6e2f02;
     display: grid;
-    grid-template-rows: 20vh 70vh 10vh;
+    grid-template-rows: 20vh 60vh 20vh;
     align-items: center;
     text-align: center; 
     & img{
@@ -34,5 +34,45 @@ export const CreateContainer = styled.div`
     }
     &Footer{
         color: #fc6a00;
+    }
+    & div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin: 0 auto;
+        border-radius: 30px;
+        width: 300px;
+        height: 300px;
+        background-color: black;
+        & h2{
+            color: #fc6a00;
+        }
+        & span{
+            margin: 0 auto;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            & button{
+                width: 25%;
+                background-color: #fc6a00;
+                padding: 5px;
+                border-radius: 20px;
+                font-weight: bold;
+                &:hover{
+                    opacity: 70%;
+                    color: white;
+                }
+            }
+            & input{
+                color: white;
+                padding: 5px;
+                width: 100%;
+                border-radius: 100px;
+                border: 2px solid #6e2f02;
+                background-color: black;
+            }
+        }
     }
 `
