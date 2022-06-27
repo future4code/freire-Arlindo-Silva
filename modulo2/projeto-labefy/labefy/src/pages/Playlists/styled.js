@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const PlaylistsContainer = styled.div`
-    max-height: 100vh;
     width: 100vw;
+    min-height: 100VH;
     background-color: #6e2f02;
     display: grid;
-    grid-template-rows: 20vh 60vh 20vh;
+    grid-template-rows: 20vh 1fr 20vh;
     align-items: center;
     text-align: center; 
     & img{
@@ -23,15 +23,6 @@ export const PlaylistsContainer = styled.div`
         gap: 20px;
         padding-left: 10vw;
     }
-    & label{
-        color: black;
-        padding-bottom: 5px;
-        margin: 0 20px;
-    }
-    & label:hover{
-        opacity: 70%;
-        border-bottom: 2px solid black;
-    }
     &Footer{
         color: #fc6a00;
     }
@@ -44,18 +35,68 @@ export const PlaylistsContainer = styled.div`
         text-align: left;
         margin: 0 auto;
         width: 300px;
-        & button{
+        margin-bottom: 50px;
+        & label{
+            text-align: center;
+            font-size: 40px;
+            border-radius: 100px;
+            background-color: #fc6a00;
+            padding: 5px;
+            &:hover{
+                opacity: 70%;
+            }
+        }
+        & span{
+            display: grid;
+            grid-template-columns: 1fr 30px;
             background-color: #fc6a00;
             border: none;
             border-radius: 100px;
-            font-size: 20px;
-            padding: 10px;
-            &:hover{
+            padding: 10px 15px;
+            & button{
                 background-color: #fc6a00;
+                width: 100%;
+                text-align: left;
+                border: none;
+                font-size: 20px;
+            }
+            &:hover{
                 color: white;
                 border: 2px solid white;
+            }
+            & input{
+                background-color: red;
+                color: white;
+                border: none;
+                padding: 5px;
+                border-radius: 1000px;
+                font-weight: bold;
+                &:hover{
+                    opacity: 60%;
+                    border: 1px solid red;
+                }
+                &:active{
+                    opacity: 100%;
+                    border: 1px solid white;
+                }
             }
            
         }
     }
 `
+
+export const Delete = styled.button`
+    width: 50px;
+    background-color: aliceblue;
+`
+
+export const LabelNav = styled.label`
+    color: black;
+    padding-bottom: 5px;
+    margin: 0 20px;
+    &:hover{
+        opacity: 70%;
+        border-bottom: 2px solid black;
+    }
+`
+

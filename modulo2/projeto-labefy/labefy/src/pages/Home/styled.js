@@ -13,18 +13,23 @@ export const HomeContainer = styled.div`
         width: 60%;
     }
     & nav{
+        border-end-end-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: black;
         justify-self: flex-start;
         font-size: 20px;
         font-weight: bold;
-        padding: 10px 0;
+        padding: 10px 5px;
         gap: 20px;
-        margin-left: 10vw;
+        padding-left: 10vw;
     }
     & label{
-        padding-bottom: 15px;
-        margin-left: 20px;
+        color: #fc6a00;
+        padding-bottom: 5px;
+        margin: 0 20px;
     }
     & label:hover{
-        border-bottom: 2px solid black;
+        opacity: 70%;
+        border-bottom: 2px solid #fc6a00;
     }
 `
