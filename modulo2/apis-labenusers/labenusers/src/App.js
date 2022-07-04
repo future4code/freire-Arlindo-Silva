@@ -4,6 +4,16 @@ import CreatUser from './components/CreatUser';
 import Users from './components/Users';
 import axios from "axios";
 import UsersDetails from './components/UserDetails';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  background-color: #002f58;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export default class App extends React.Component{
   state = {
@@ -124,36 +134,42 @@ export default class App extends React.Component{
     switch (this.state.screen) {
       case "create":
         return (
-          <CreatUser
-          name={this.state.name}
-          onChangeName={this.onChangeName}
-          email={this.state.email}
-          onChangeEmail={this.onChangeEmail}
-          onClickSend={this.onClickSend}
-          changeScreen={this.changeScreen}
-          />
+          <Container>
+            <CreatUser
+            name={this.state.name}
+            onChangeName={this.onChangeName}
+            email={this.state.email}
+            onChangeEmail={this.onChangeEmail}
+            onClickSend={this.onClickSend}
+            changeScreen={this.changeScreen}
+            />
+          </Container>
       )
       case "users":
         return (
-          <Users 
-          changeScreen={this.changeScreen}
-          users={showUsers}
-          onClickRemove={this.onClickRemove}
-          onClickUser={this.onClickUser}
-          search={this.state.search}
-          onChangeInputSearch={this.onChangeInputSearch}
-          inputSearch={this.inputSearch}
-          onClickSearch={this.onClickSearch}
-          researched={this.state.researched}
-          />
+          <Container>
+            <Users 
+            changeScreen={this.changeScreen}
+            users={showUsers}
+            onClickRemove={this.onClickRemove}
+            onClickUser={this.onClickUser}
+            search={this.state.search}
+            onChangeInputSearch={this.onChangeInputSearch}
+            inputSearch={this.inputSearch}
+            onClickSearch={this.onClickSearch}
+            researched={this.state.researched}
+            />
+          </Container>
         )
       case "user":
         return (
-          <UsersDetails
-          changeScreen={this.changeScreen}
-          user={this.state.userDetails}
-          onClickRemove={this.onClickRemove}
-          />
+          <Container>
+            <UsersDetails
+            changeScreen={this.changeScreen}
+            user={this.state.userDetails}
+            onClickRemove={this.onClickRemove}
+            />
+          </Container>
         )
       }
   }

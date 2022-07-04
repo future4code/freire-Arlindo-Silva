@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 const CreateContainer = styled.div`
+    color: #011a30;
+    border-radius: 30px;
+    width: 300px;
+    background-color: aliceblue;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,18 +25,17 @@ const Button = styled.button`
     font-size: 13px;
     padding: 3px 6px;
     font-weight: bold;
-    background-color: white;
-    border: 1px solid black;
+    background-color: #002f58;
+    color: white;
+    border: 1px solid #011a30;
     border-radius: 10px;
     margin: 10px;
-    margin-bottom: 20px;
     &:hover{
-        background-color: #cacaca;
+        background-color: #002f58b5;
     }
     &:active{
-        background-color: gray
+        background-color: #002f58;
     }
-
 `
 
 export default class CreatUser extends React.Component{

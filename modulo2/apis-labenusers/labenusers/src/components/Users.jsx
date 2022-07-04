@@ -2,44 +2,57 @@ import React from "react";
 import styled from "styled-components";
 
 const UsersContainer = styled.div`
+    color: #011a30;
+    border-radius: 30px;
+    width: 90vw;
+    background-color: aliceblue;
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
     align-items: center;
     gap: 5px;
+    padding-bottom: 20px;
+    margin: 20px 0px;
 `
+const SearchContainer = styled.div`
+    & input{
+        width: 150px;
+        padding: 2px;
+    }
+`
+
 const Button = styled.button`
     font-size: 13px;
     padding: 3px 6px;
     font-weight: bold;
-    background-color: white;
-    border: 1px solid black;
+    background-color: #002f58;
+    color: white;
+    border: 1px solid #011a30;
     border-radius: 10px;
     margin: 10px;
-    margin-bottom: 20px;
     &:hover{
-        background-color: #cacaca;
+        background-color: #002f58b5;
     }
     &:active{
-        background-color: gray
+        background-color: #002f58;
     }
-
 `
 
 const UsuarioName = styled.label`
     border: 0;
-    font-size: 18px;
-
+    font-size: 16px;
+    font-weight: 500;
 `
 
 const Usuario = styled.div`
-    width: 300px;
+    border-radius: 50px;
+    width: 70vw;
     display: grid;
     grid-template-columns: 1fr 25px;
     justify-content: space-between;
-    padding: 5px 10px;
+    padding: 4px 8px;
     &:hover{
         background-color: #cacaca;
-        border-radius: 50px;
     }
     &:active{
         background-color: gray
@@ -47,7 +60,7 @@ const Usuario = styled.div`
     & button{
         background-color: #fa0000;
         color: white;
-        border: 1px solid black;
+        border: 0px solid black;
         border-radius: 10px;
         font-weight: bold;
     }
@@ -65,7 +78,7 @@ export default class Users extends React.Component{
         })
         .map(user =>{
             return (<div key={user.id}>
-            <Usuario >
+            <Usuario>
                 <UsuarioName 
                 onClick={() => {this.props.onClickUser(user.id)}}
                 >{user.name}</UsuarioName>
@@ -77,16 +90,16 @@ export default class Users extends React.Component{
         return(
             <UsersContainer>                
                 <Button onClick={() => {this.props.changeScreen("create")}}>Voltar</Button>
-                <div>
+                <SearchContainer>
                     <input
                     id="search"
                     onChange={this.props.onChangeInputSearch}
                     value={this.props.inputSearch}                    
                     type="text"
-                    placeholder="Digite o nome de cadastro"
+                    placeholder="Digite o nome"
                     />
                     <Button onClick={this.props.onClickSearch}>Pesquisar</Button>
-                </div>
+                </SearchContainer>
                 <h3>Lista de Usuarios:</h3>
                 {usersMapeados}
             </UsersContainer>

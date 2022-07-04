@@ -4,15 +4,22 @@ import styled from "styled-components";
 import axios from "axios";
 
 const UserContainer = styled.div`
+    color: #011a30;
+    border-radius: 30px;
+    width: 90vw;
+    align-self: flex-start;
+    background-color: aliceblue;
     margin: 0 auto;
-    width: 300px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    margin: 20px 0px;
     & p{
-        align-self: flex-start;
+        width: 300px;
+        align-self: center;
+        justify-self: center;
         margin: 0;
         font-size: 18px;
     }
@@ -21,18 +28,17 @@ const Button = styled.button`
     font-size: 13px;
     padding: 3px 6px;
     font-weight: bold;
-    background-color: white;
-    border: 1px solid black;
+    background-color: #002f58;
+    color: white;
+    border: 1px solid #011a30;
     border-radius: 10px;
     margin: 10px;
-    margin-bottom: 20px;
     &:hover{
-        background-color: #cacaca;
+        background-color: #002f58b5;
     }
     &:active{
-        background-color: gray
+        background-color: #002f58;
     }
-
 `
 const RemoveButton = styled.button`
     font-size: 13px;

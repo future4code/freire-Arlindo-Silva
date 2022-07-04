@@ -15,18 +15,17 @@ const Button = styled.button`
     font-size: 13px;
     padding: 3px 6px;
     font-weight: bold;
-    background-color: white;
-    border: 1px solid black;
+    background-color: #002f58;
+    color: white;
+    border: 1px solid #011a30;
     border-radius: 10px;
     margin: 10px;
-    margin-bottom: 20px;
     &:hover{
-        background-color: #cacaca;
+        background-color: #002f58b5;
     }
     &:active{
-        background-color: gray
+        background-color: #002f58;
     }
-
 `
 
 
