@@ -3,8 +3,14 @@ import styled from "styled-components"
 
 const CommentContainer = styled.div`
     display: flex;
+	flex-direction: column;
     justify-content: center;
-    padding: 5px;
+	padding: 10px;
+`
+const Comentando = styled.div`
+	display: flex;
+    justify-content: center;
+
 `
 
 const InputComment = styled.input `
@@ -13,20 +19,21 @@ const InputComment = styled.input `
 `
 
 const SecaoComentario = (props) => {
-
-
-	const onChangeComentario = (event) => {
-	}
-
+	
 	return (
 		<CommentContainer>
-			<InputComment
-				className={'input-comentario'}
-				placeholder={'Comentário'}
-				value={""}
-				onChange={onChangeComentario}
-			/>
-			<button onClick={() => { props.enviarComentario() }} >Enviar</button>
+			<div>{props.comentarios.map(comentario => {
+				return <p>{comentario}</p>
+			})}</div>
+			<Comentando>
+				<InputComment
+					className={'input-comentario'}
+					placeholder={'Comentário'}
+					value={props.comentario}
+					onChange={props.onChangeComentario}
+				/>
+				<button onClick={() => { props.enviarComentario(props.comentario) }} >Enviar</button>
+			</Comentando>
 		</CommentContainer>
 	)
 }
