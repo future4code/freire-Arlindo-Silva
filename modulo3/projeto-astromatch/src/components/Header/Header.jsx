@@ -7,9 +7,9 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 const Header = styled.header`
     color: #be80ff;
     text-align: center;
-    width: 250px;
+    width: 300px;
     display: grid;
-    grid-template-columns: 40px 1fr 40px;
+    grid-template-columns: 30px 1fr 30px;
     align-items: center;
     text-shadow: 0 0 10px #0000002d;
     & > button{
@@ -20,17 +20,17 @@ const Header = styled.header`
 
 export default function SiteHeader(props) {
 
-    let leftButton
+    let rightButton
 
-    switch (props.leftButton) {
+    switch (props.rightButton) {
         case 'matches':
-            leftButton = <People />
+            rightButton = <People />
             break;
         case 'match':
-            leftButton = <PersonAdd />
+            rightButton = <PersonAdd />
             break;
         default:
-            leftButton = <PersonAdd />
+            rightButton = <PersonAdd />
             break;
     }
 
@@ -46,7 +46,7 @@ export default function SiteHeader(props) {
             <IconButton
             onClick={props.changeScreen}
             >
-                {leftButton}                
+                {rightButton}                
             </IconButton>       
         </Header>
 );

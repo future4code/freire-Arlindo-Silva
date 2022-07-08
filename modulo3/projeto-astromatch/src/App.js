@@ -6,7 +6,8 @@ import { url } from "./constants/constants";
 import styled from "styled-components";
 
 const GlobalContainer = styled.div`
-  height: 100vh;  
+  min-height: 90vh;  
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +39,6 @@ export default function App() {
   const getMatches = () => {
     axios.get(`${url}/matches`)
       .then((res) => {
-        console.log(`entrei`);
         setMatches(res.data.matches)
       })
       .catch((err) => {

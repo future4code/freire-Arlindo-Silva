@@ -7,17 +7,20 @@ import styled from "styled-components";
 import IconButton from '@mui/material/IconButton';
 import Like from '@mui/icons-material/FavoriteBorder';
 import Discard from '@mui/icons-material/Clear';
-import Restart from '@mui/icons-material/RestartAlt';
+import heart from '../../constants/heart.png'
+import "./styles.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MatchContainer = styled.div`
     border: 1px solid #be80ff;
     background-color: #9061c211;
     border-radius: 20px;
     height: 500px;
-    width: 300px;
+    width: 350px;
     margin: 0 auto;
     display: grid;
-    grid-template-rows: 50px 1fr 80px;
+    grid-template-rows: 50px 1fr 0px 80px;
     justify-content: center;
     align-items: center;
     & :last-child{
@@ -26,66 +29,85 @@ const MatchContainer = styled.div`
         align-items: center;
     }
 `
+
 export default function Match(props) {
 
-    const [person, newPerson] = useState({})
+    const [person, newPerson] = useState('')
 
     useEffect(() => {
         getPerson()
     }, [])
 
+    const notify = () => {
+        toast('Uh Uh Deu Match!!', {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+
     async function getPerson() {
         try {
             const response = await axios.get(`${url}/person`)
-            newPerson(response.data.profile)
+            if (response.data.profile !== null) {
+                newPerson(response.data.profile)
+            }            
         } catch (error) {
-            alert('Erro')
+            
         }
     }
 
     async function likePerson(id) {
-        console.log(id);
+        newPerson('')
         try {
             const body = {
                 id: `${id}`,
                 choice: true
             }
-            await axios.post(`${url}/choose-person`, body)
+            const response = await axios.post(`${url}/choose-person`, body)
+            if (response.data.isMatch === true) {
+                notify()
+            }
             getPerson()
             props.getMatches()
         } catch (error) {
-            alert('Erro')
-            console.log(error);
         }
     }
 
     async function discardPerson(id) {
-        console.log(id);
+        newPerson('')
         try {
             const body = {
                 id: `${id}`,
                 choice: false
-            }
+            }            
             await axios.post(`${url}/choose-person`, body)
             getPerson()
             props.getMatches()
         } catch (error) {
-            alert('Erro')
-            console.log(error);
         }
     }
 
-
     return (
-        <MatchContainer>
-            <SiteHeader leftButton='matches' changeScreen={props.changeScreen}/>
-            <Card
-                name={person.name}
-                photo={person.photo}
-                age={person.age}
-                bio={person.bio}
-            />
+        <MatchContainer>            
+            <SiteHeader rightButton='matches' changeScreen={props.changeScreen} />
+            {(person != '') ?
+                <Card
+                    name={person.name}
+                    photo={person.photo}
+                    age={person.age}
+                    bio={person.bio}
+                />
+                :
+                <img src={heart} className="pulse"></img>
+            }            
+            <ToastContainer/>
             <div>
+                
                 <IconButton
                     onClick={() => { discardPerson(person.id) }}
                     sx={{
@@ -95,36 +117,25 @@ export default function Match(props) {
                         color: '#fc1a1a',
                         marginTop: '10px',
                         marginBottom: '10px',
-                        '&:hover': {
-                            borderColor: '#791425',
-                            color: '#791425',
-                            backgroundColor: '#fc1a1a9e'
-                        }
                     }}
 
                 >
-                    <Discard fontSize="inherit"/>
+                    <Discard fontSize="inherit" />
                 </IconButton>
-                <IconButton 
-                onClick={() => { likePerson(person.id) }}
-                sx={{
-                    border: '3px solid',
-                    borderColor: '#8de0a6',
-                    width: 'fit-content',
-                    color: '#8de0a6',
-                    marginTop: '10px',
-                    marginBottom: '10px',
-                    '&:hover': {
-                        borderColor: '#538a64',
-                        color: '#538a64',
-                        backgroundColor: '#8de0a6'
-                    }
-                }}
+                <IconButton
+                    onClick={() => { likePerson(person.id) }}
+                    sx={{
+                        border: '3px solid',
+                        borderColor: '#74b989',
+                        width: 'fit-content',
+                        color: '#74b989',
+                        marginTop: '10px',
+                        marginBottom: '10px',
+                    }}
                 >
-                    <Like fontSize="inherit"/>
+                    <Like fontSize="inherit" />
                 </IconButton>
             </div>
-
         </MatchContainer>
     );
 }

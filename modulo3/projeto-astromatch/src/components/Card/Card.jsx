@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const CardContainer = styled.div`
     box-shadow: 0 0 1em #9061c2;
-    width: 250px;
+    width: 300px;
     height: 370px;
     gap: 5px;
     border-radius: 10px;
@@ -14,9 +14,7 @@ const CardContainer = styled.div`
         height: 100%;
         object-fit: cover;
     }
-`
-
- 
+` 
 
 const ProfileInfo = styled.div`
     width: 100%;
@@ -31,11 +29,10 @@ const ProfileInfo = styled.div`
         margin: 0;
         padding: 0;
         text-align: left;
-        width: 250px;
-        padding-left: 10px;
-        padding-top: 5px;
+        padding-left: 5px;
         height: 30px;
         position: absolute;
+        left: 0;
         top: 0;
     }
     & > p{
