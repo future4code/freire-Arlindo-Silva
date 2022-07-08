@@ -74,6 +74,6 @@ export default function App() {
         </GlobalContainer>
       )
     default:
-      return <div>RE</div>
+      return <div>PAGE NOT FOUND</div>
   }
 }
