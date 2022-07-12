@@ -1,4 +1,6 @@
-export default function ListTrips() {
+
+
+export default function Header() {
     return (
         <div>
             
