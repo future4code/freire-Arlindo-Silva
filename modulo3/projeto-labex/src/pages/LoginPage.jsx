@@ -9,6 +9,7 @@ import { url } from "../constants/Data";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import { goToAdmHomePage } from "../routes/coordinator";
+import useForm from "../hooks/Hooks";
 
 const LoginPageContainer = styled.div`
     width: 100vw;
@@ -22,65 +23,57 @@ const LoginContainer = styled.div`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 5px;
     align-items: center;
-    & h2{
+    & > h2{
         margin-top: 50px;
         margin-bottom: 25px;
     }
-
-    & input{
-        background-color: #000000;
-        width: 90%;
-        padding: 10px;
-        border-radius: 50px;
-        border: none;
-        color: white;
-    }
-    & button{
-        background-color: #000000;
-        color: white;
-        padding: 7px;
-        margin-top: 25px;
-        border-radius: 50px;
+    & > form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:5px;
+        width: 300px;
+        & > input{
+            background-color: #000000;
+            width: 90%;
+            padding: 10px;
+            border-radius: 50px;
+            border: none;
+            color: white;
+        }
+        & > button{
+            background-color: #000000;
+            color: white;
+            padding: 7px;
+            margin-top: 25px;
+            border-radius: 50px;
+        }
     }
 `
 
 
 export default function Login() {
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const { form, onChange, cleanFields } = useForm({ email: "", password: "" });
 
     const navigate = useNavigate()
 
-    const handleEmail = (ev) => {
-        setEmail(ev.target.value)
-    }
-
-    const handleSenha = (ev) => {
-        setSenha(ev.target.value)
-    }
-
-    const login = () => {
-        const body = {
-            email: email,
-            password: senha
-        }
-        axios.post(`${url}/login`, body, {
+    const login = (event) => {
+        event.preventDefault();
+        axios.post(`${url}/login`, form, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
         .then((response) => {
             localStorage.setItem("token", response.data.token);
-            setEmail('') 
-            setSenha('')
-            navigate('/admin-home')
+            navigate('/admin/trips/list')
             
         })
         .catch((error) => {
-            console.log("Deu erro", error.response);
+            alert("Verifique suas credenciais");
         })
+        cleanFields();
     }
 
     return (
@@ -88,19 +81,29 @@ export default function Login() {
             <Header/>
             <LoginContainer>
                 <h2>Faça Login para ter acesso</h2>
-                <input 
-                placeholder="Email" 
-                onChange={handleEmail}
-                value={email}
-                />
-                <input type="password" 
-                placeholder="Senha" 
-                value={senha}
-                onChange={handleSenha}
-                />
-                <button
-                onClick={login}
-                >Entrar</button>
+
+                <form onSubmit={login}>
+                    <input
+                        name="email"
+                        value={form.email}
+                        onChange={onChange}
+                        placeholder={"E-mail"}
+                        required
+                        type="email"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={form.password}
+                        onChange={onChange}
+                        placeholder={"Senha"}
+                        required
+                        pattern={"^.{3,}"}
+                        title={"Sua senha deve ter no mínimo 3 caracteres"}
+                    />
+
+                    <button>Entrar</button>
+                </form>
             </LoginContainer>
         </LoginPageContainer>
     );

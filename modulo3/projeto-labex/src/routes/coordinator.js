@@ -11,21 +11,21 @@ export const goToLoginPage = (navigate) => {
 }
 
 export const goToAdmHomePage = (navigate) =>{
-    navigate('admin-home')
+    navigate('admin/trips/list')
 }
 
 export const goToAppFormPage = (navigate) => {
-    navigate('app-form')
+    navigate('/trips/application')
 }
 
 export const goToCreateTripPage = (navigate) => {
-    navigate('create-trip')
+    navigate('/admin/trips/create')
 }
 
 export const goToTripsPage = (navigate) => {
-    navigate('list-trips')
+    navigate('/trips/list')
 }
 
 export const goToTripDetailPage = (navigate) => {
-    navigate('trip-details')
+    navigate('/admin/trips/:id')
 }
