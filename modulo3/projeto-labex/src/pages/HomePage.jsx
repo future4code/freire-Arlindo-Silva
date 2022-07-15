@@ -1,6 +1,6 @@
 import logo from '../constants/logo.svg'
 import styled from 'styled-components';
-import { goToTripsPage, goToAdmHomePage } from '../routes/coordinator';
+import { goToTripsPage, goToAdmHomePage, goToLoginPage } from '../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
 
 const HomeContainer = styled.div`
@@ -59,15 +59,22 @@ const BotaoAdm = styled.button`
 
 export default function Home() {
     const navigate = useNavigate()
+    const token = localStorage.getItem("token");
     return (
         <HomeContainer>           
             <div>
                 <img src={logo} alt="" />
                 <button onClick={() => {goToTripsPage(navigate)}}>Escolha sua viagem</button> 
-            </div>   
-            <BotaoAdm onClick={() => {goToAdmHomePage(navigate)}}>
+            </div>
+            {token ? 
+                <BotaoAdm onClick={() => {goToAdmHomePage(navigate)}}>
                 Área Administrativa
-            </BotaoAdm>             
+                </BotaoAdm>
+            :             
+                <BotaoAdm onClick={() => {goToLoginPage(navigate)}}>
+                Fazer Login
+                </BotaoAdm>        
+            }   
         </HomeContainer>
     );
   }

@@ -24,7 +24,6 @@ export default function ListTrips() {
     useEffect(() => {
         axios.get(`${url}/trips`)
         .then(response => {
-            console.log(response.data.trips);
             setViagens(response.data.trips)
         })
     },[])

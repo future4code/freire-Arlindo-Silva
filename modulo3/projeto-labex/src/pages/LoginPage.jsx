@@ -25,6 +25,7 @@ const LoginContainer = styled.div`
     flex-direction: column;
     align-items: center;
     & > h2{
+        cursor: pointer;
         margin-top: 50px;
         margin-bottom: 25px;
     }
