@@ -15,8 +15,9 @@ const TripCardContainer = styled.div`
 export default function TripCard(props) {
     const navigate = useNavigate()
 
-    const onClickInscrever = () => {
-        navigate('/trips/application')
+    const onClickInscrever = (id) => {
+        localStorage.setItem("viagemEscolhida", id);
+        navigate('/trips/application')        
     }
 
     return (
@@ -26,7 +27,7 @@ export default function TripCard(props) {
             <li>Saída: {props.viagem.date}</li>
             <li>Duração: {props.viagem.durationInDays} dias</li>
             <p>{props.viagem.description}</p>
-            <button onClick={onClickInscrever}>Inscrever</button>
+            <button onClick={() => {onClickInscrever(props.viagem.id)}}>Inscrever</button>
         </TripCardContainer>
         
     );

@@ -23,9 +23,16 @@ const HeaderContainer = styled.div`
         & > div{
             & > button{
                 margin-left: 8px;
-                background-color: black;
+                background-color: transparent;
+                border: none;
                 color: white;
                 padding-bottom: 1px;
+                &:hover{
+                    opacity: 70%;
+                }
+                &:active{
+                    opacity: 100%;
+                }
         }}
     }
     & > button{
@@ -38,6 +45,13 @@ const HeaderContainer = styled.div`
         border: none;
         text-shadow: 0 0 2px #d1f7ff;;
         padding: 5px;
+        border: none;
+        &:hover{
+                opacity: 70%;
+        }
+        &:active{
+            opacity: 100%;
+        }
     }
 `
 

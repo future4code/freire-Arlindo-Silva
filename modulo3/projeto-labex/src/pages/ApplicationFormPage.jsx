@@ -2,7 +2,7 @@ import Header from "../header/Header";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { url, paises } from "../constants/Data"
+import { url, paises, header } from "../constants/Data"
 import useForm from "../hooks/Hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -26,20 +26,25 @@ const ApplicationFormPageContainer = styled.div`
             align-self: center;
             background-color: #000000;
             color: white;
-            padding: 7px;
+            padding: 10px;
             margin-top: 25px;
             border-radius: 50px;
+            border: none;
+            &:hover{
+                opacity: 80%;
+            }
+            &:active{
+                opacity: 100%;
+            }
         }
     }
 
 `
 
 export default function ApplicationForm() {
+    const { form, onChange, cleanFields } = useForm({ name: "", age: "", applicationText: "", profession: "", country: "" });
+    const [ viagem, setViagem] = useState(localStorage.getItem("viagemEscolhida"))
     const [viagens, setViagens] = useState()
-    const { form, onChange, cleanFields } = useForm({ name: "", age: "", applicationText: "", profession: "", country: "", trip: "" });
-
-    const navigate = useNavigate()
-
 
     useEffect(() => {
         axios.get(`${url}/trips`)
@@ -48,20 +53,28 @@ export default function ApplicationForm() {
         })
     },[])
 
+    const onChangeViagem = (event) => {
+        setViagem(event.target.value)
+    }
+    
     const inscrever = (event) => {
         event.preventDefault();
+        axios.post(`${url}/trips/${viagem}/apply`, form, header)
+        .then(() => {
+            console.log(form, viagem);
+            alert('Inscrito com sucesso')
+        })       
         cleanFields()
     }
 
-    console.log(form);
     return (
         <ApplicationFormPageContainer>
             <Header/>
             <form onSubmit={inscrever}>
                 <select 
                 name="trip" 
-                value={form.trip}
-                onChange={onChange}
+                value={viagem}
+                onChange={onChangeViagem}
                 required
                 >
                     <option value="">Escolha uma Viagem</option>

@@ -12,8 +12,10 @@ const HomeContainer = styled.div`
 
     & > div{
         box-shadow: 0 0 1em #2adfe9;
-        width: 90vw;
-        height: 90vh;
+        min-width: 90vw;
+        max-width: 100vw;
+        max-height: 100vh;
+        min-height: 90vh;
         background-color: #000000a0;
         display: grid;
         grid-template-rows: 350px 1fr;
@@ -28,7 +30,8 @@ const HomeContainer = styled.div`
         & > button{
             box-shadow: 0 0 1em #d1f7ff;
             height: 100px;
-            width: 300px;
+            max-width: 50vw;
+            min-width: 25vw;
             justify-self: center;
             font-size: 20px;
             font-weight: bold;
@@ -47,7 +50,8 @@ const BotaoAdm = styled.button`
     position: absolute;
     top: 0px;
     right: 0px;
-    height: 35px;
+    min-height: 30px;
+    max-height: 35px;
     width: 150px;
     background-color: white;
     box-shadow: 0 0 3px #d1f7ff;
