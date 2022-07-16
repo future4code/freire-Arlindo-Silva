@@ -1,4 +1,4 @@
-import Header from "../header/Header";
+import Header from "../components/Header";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -11,7 +11,9 @@ const AdminHomePageContainer = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-
+    & > h2{
+        text-align: center;
+    }
 `
 
 const ViagemCard = styled.div`
@@ -33,6 +35,7 @@ const ViagemCard = styled.div`
         border: 2px solid red;
         font-size: 18px;
         font-weight: bold;
+
     }
 
 `
@@ -42,9 +45,9 @@ const CreateButton = styled.button`
     font-size: 18px;
     margin-bottom: 30px;
     align-self: center;
-    background-color: #000000;
+    background-color: #012b28;
     color: white;
-    padding: 10px;
+    padding: 15px;
     border-radius: 50px;
     border: none;
     &:hover{
@@ -74,6 +77,10 @@ export default function AdminHome() {
         })
     }
 
+    const onClickTrip =(id) => {
+        navigate(`/admin/trips/${id}`)
+    }
+
     const deleteTrip = (id) => {
         axios.delete(`${url}/trips/${id}`, {
             headers:{
@@ -98,13 +105,14 @@ export default function AdminHome() {
             >
                 Adicionar viagem ao catálogo
             </CreateButton>
-            {viagens && viagens.map(viagem =>{
+            {viagens && viagens.map(viagem => {
                 return  <ViagemCard>
-                            <p>{viagem.name}</p>
+                            <p onClick={() => {onClickTrip(viagem.id)}}>{viagem.name}</p>
                             <button onClick={() => {deleteTrip(viagem.id)}}>X</button>
                         </ViagemCard>
                             
             })}
+          
         </AdminHomePageContainer>
     );
   }

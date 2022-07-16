@@ -8,14 +8,12 @@ const HomeContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    max-height: 100vh;
 
     & > div{
         box-shadow: 0 0 1em #2adfe9;
-        min-width: 90vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        min-height: 90vh;
+        width: 90vw;
+        height: 90vh;
         background-color: #000000a0;
         display: grid;
         grid-template-rows: 350px 1fr;
@@ -40,9 +38,27 @@ const HomeContainer = styled.div`
             background-color: #00554f;
             color: white;
             text-shadow: 0 0 5px black;
+            &:hover{
+                opacity: 70%;
+            }
+            &:active{
+                opacity: 100%;
+            }
+
+        }
+    }
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        & > div{
+            height: 80vh;
         }
     }
 
+    /* @media(max-width: 800px) {
+        & > div{
+            height: 50vh;
+            background-color: #00554f;
+        }    
+    } */
 
 `
 
@@ -58,6 +74,7 @@ const BotaoAdm = styled.button`
     border: 1px solid #8d9194;
     border-radius: 0 0 0 5px;
     font-weight: bold;
+    color: #00554f;
 `
 
 

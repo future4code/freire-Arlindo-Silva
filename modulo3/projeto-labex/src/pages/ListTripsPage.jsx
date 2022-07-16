@@ -1,4 +1,4 @@
-import Header from "../header/Header";
+import Header from "../components/Header";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,14 +8,25 @@ import TripCard from "../components/TripCard";
 const ListTripsPageContainer = styled.div`
     background-color: #1a9da6;
     min-height: 100vh;
-
+    & > h2{
+        text-align: center;
+    }
 `
 
 const ListTripsContainer = styled.div`
     display: grid;
     width: 100vw;
-    grid-template-columns: 1fr 1fr ;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr ;
+    padding-bottom: 20px;
+    
     gap: 10px;
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 `
 
 export default function ListTrips() {
@@ -31,6 +42,8 @@ export default function ListTrips() {
     return (
         <ListTripsPageContainer>
             <Header/>
+            {viagens
+            ?
             <ListTripsContainer>
                 {viagens && viagens.map(viagem => {
                     return <TripCard
@@ -39,6 +52,9 @@ export default function ListTrips() {
                             />
                 })}    
             </ListTripsContainer>
+            :
+            <h2>Carregando...</h2>
+            }
         </ListTripsPageContainer>
         
     );

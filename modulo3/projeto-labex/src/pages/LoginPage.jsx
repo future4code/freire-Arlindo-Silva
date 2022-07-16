@@ -1,4 +1,4 @@
-import Header from "../header/Header";
+import Header from "../components/Header";
 import styled from "styled-components";
 import { TextField } from "@mui/material";
 import { alpha } from "@mui/material";
@@ -49,6 +49,7 @@ const LoginContainer = styled.div`
             padding: 7px;
             margin-top: 25px;
             border-radius: 50px;
+            border: none;
         }
     }
 `

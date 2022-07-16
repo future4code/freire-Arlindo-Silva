@@ -2,14 +2,11 @@ import logo from '../constants/logo.svg'
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { goBack, goToHomePage, goToLoginPage } from '../routes/coordinator';
-import { useEffect } from 'react';
-import Login from '../pages/LoginPage';
 
 const HeaderContainer = styled.div`
     height: 30vh;
     display: grid;
     grid-template-rows: 1fr 15vh;
-    
     & > div{
         padding: 0 10px;        
         display: flex;
@@ -46,6 +43,7 @@ const HeaderContainer = styled.div`
         text-shadow: 0 0 2px #d1f7ff;;
         padding: 5px;
         border: none;
+        color: black;
         &:hover{
                 opacity: 70%;
         }
@@ -60,7 +58,7 @@ export default function Header() {
     const token = localStorage.getItem("token")
 
     const logout = () => {
-        localStorage.setItem("token", '');
+        localStorage.removeItem("token");
         goToLoginPage(navigate)
     }
     

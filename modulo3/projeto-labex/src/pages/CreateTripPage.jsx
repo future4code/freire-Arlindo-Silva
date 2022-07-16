@@ -1,4 +1,4 @@
-import Header from "../header/Header";
+import Header from "../components/Header";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -21,6 +21,11 @@ const CreateTripPageContainer = styled.div`
             border-radius: 50px;
             border: none;
             color: white;
+            align-self: center;
+            width: 105%;
+        }
+        & > input{
+            width: 100%;
         }
         & > button{
             align-self: center;
@@ -43,7 +48,6 @@ const CreateTripPageContainer = styled.div`
 
 export default function CreateTrip() {
     const { form, onChange, cleanFields } = useForm({ name: "", planet: "", date: "", description: "", durationInDays: "" });
-    const [ viagem, setViagem] = useState(localStorage.getItem("viagemEscolhida"))
     const [dataFutura, setDataFutura] = useState('')
 
     useEffect(() => {
@@ -65,7 +69,6 @@ export default function CreateTrip() {
             }
         })
         .then(() => {
-            console.log(form, viagem);
             alert('Viagem criada com sucesso')
         })       
         cleanFields()
@@ -101,6 +104,7 @@ export default function CreateTrip() {
                 <input 
                 type="date"
                 name="date"
+                placeholder="Data"
                 value={form.date}
                 onChange={onChange}
                 min={dataFutura}
