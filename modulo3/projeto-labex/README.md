@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LabeX
 
 > Status do Projeto: Concluido :heavy_check_mark:.
@@ -60,3 +61,6 @@ TRIP DETAIL PAGE:
 
 
 
+=======
+
+>>>>>>> 916ebdae6b48ac01559a459cf0d82d54bec2748c
