@@ -1,14 +1,16 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../constants/Data"
-import TripCard from "../components/TripCard";
 import { useParams, useNavigate } from "react-router-dom";
 
 const DetailTripPageContainer = styled.div`
     background-color: #1a9da6;
     min-height: 100vh;
+    display: grid;
+    grid-template-rows: 30vh 1fr 10vh;
     & > h2{
         text-align: center;
     }
@@ -160,6 +162,7 @@ export default function TripDetails() {
             </DetailTripContainer>
             : 
             <h2>Carregando...</h2>}
+            <Footer/>
         </DetailTripPageContainer>
         
     );

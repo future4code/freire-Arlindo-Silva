@@ -1,21 +1,16 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import styled from "styled-components";
-import { TextField } from "@mui/material";
-import { alpha } from "@mui/material";
-import InputBase from '@mui/material/InputBase';
-import degrade from '../constants/degrade.jpg'
-import { useState } from "react";
 import { url } from "../constants/Data";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-import { goToAdmHomePage } from "../routes/coordinator";
 import useForm from "../hooks/Hooks";
 
 const LoginPageContainer = styled.div`
     width: 100vw;
+    min-height: 100vh;
     display: grid;
-    grid-template-rows: 25vh 75vh;
-    /* background-image: url(${degrade}); */
+    grid-template-rows: 30vh 1fr 10vh;
     background-color: #1a9da6;
 `
 
@@ -107,6 +102,7 @@ export default function Login() {
                     <button>Entrar</button>
                 </form>
             </LoginContainer>
+            <Footer/>
         </LoginPageContainer>
     );
   }

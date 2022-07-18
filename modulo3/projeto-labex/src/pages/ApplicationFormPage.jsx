@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 const ApplicationFormPageContainer = styled.div`
     background-color: #1a9da6;
     min-height: 100vh;
+    display: grid;
+    grid-template-rows: 30vh 1fr 10vh;
     & > form{
         margin: 0 auto;
         width: 350px;
@@ -134,7 +137,7 @@ export default function ApplicationForm() {
                 </select>
                 <button>Enviar</button>
             </form>
-            
+            <Footer/>
         </ApplicationFormPageContainer>
     );
   }

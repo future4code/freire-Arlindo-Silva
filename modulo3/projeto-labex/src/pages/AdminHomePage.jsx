@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,6 +10,10 @@ import { useNavigate } from 'react-router-dom';
 const AdminHomePageContainer = styled.div`
     background-color: #1a9da6;
     min-height: 100vh;
+    display: grid;
+    grid-template-rows: 30vh 1fr 10vh;
+`
+const AdminTrips = styled.div`
     display: flex;
     flex-direction: column;
     & > h2{
@@ -33,9 +38,14 @@ const ViagemCard = styled.div`
         color: red;
         border-radius: 100px;
         border: 2px solid red;
-        font-size: 18px;
+        font-size: 10px;
         font-weight: bold;
-
+        &:hover{
+            opacity: 70%;
+        }
+        &:active{
+            opacity: 100%;
+        }
     }
 
 `
@@ -100,19 +110,21 @@ export default function AdminHome() {
     return (
         <AdminHomePageContainer>
             <Header/>
-            <CreateButton
-            onClick={() => {navigate('/admin/trips/create')}}
-            >
-                Adicionar viagem ao catálogo
-            </CreateButton>
-            {viagens && viagens.map(viagem => {
-                return  <ViagemCard>
-                            <p onClick={() => {onClickTrip(viagem.id)}}>{viagem.name}</p>
-                            <button onClick={() => {deleteTrip(viagem.id)}}>X</button>
-                        </ViagemCard>
-                            
-            })}
-          
+            <AdminTrips>
+                <CreateButton
+                onClick={() => {navigate('/admin/trips/create')}}
+                >
+                    Adicionar viagem ao catálogo
+                </CreateButton>
+                {viagens && viagens.map(viagem => {
+                    return  <ViagemCard>
+                                <p onClick={() => {onClickTrip(viagem.id)}}>{viagem.name}</p>
+                                <button onClick={() => {deleteTrip(viagem.id)}}>X</button>
+                            </ViagemCard>
+                                
+                })}
+            </AdminTrips>
+            <Footer/>
         </AdminHomePageContainer>
     );
   }
