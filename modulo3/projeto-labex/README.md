@@ -16,7 +16,7 @@ LINK : [Clique Aqui](https://perroni-labex.surge.sh)
 - [x] Detalhes de cada viagem
 - [x] Aprovar ou reprovar inscritos
 - [x] Formulário de aplicação
-
+- [x] Responsividade
 
 ## Descrição do Projeto
 <p>O LabeX consiste em um site de uma agencia de viagens espaciais e é voltado tanto para o público consumidor como para administradores que tem funções especiais como criar e deletar viagens. </p>
