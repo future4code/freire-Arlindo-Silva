@@ -22,7 +22,7 @@ const Header = () => {
 
     return(
         <HeaderContainer>            
-            <img src={logo} alt="" />
+            <img src={logo} alt="logo" onClick={() => goToFeedPage(navigate)}/>
             {(token && token.length > 0) 
             ?
             <Button 

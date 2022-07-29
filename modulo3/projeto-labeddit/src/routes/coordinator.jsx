@@ -1,5 +1,5 @@
 export const goToFeedPage = (navigate) => {
-    navigate("/")
+    navigate("/1")
 }
 
 export const goToLoginPage = (navigate) => {

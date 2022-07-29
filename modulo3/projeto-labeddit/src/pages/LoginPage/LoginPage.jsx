@@ -1,18 +1,21 @@
-import React from "react"
+import React, { useEffect} from "react"
 import logo from "../../assets/logo.svg"
 import text from "../../assets/text.svg"
-import line from "../../assets/line-gradient.svg"
-import { ScreenContainer, Line, LogoImage, SignUpButtonContainer } from "./styled"
+import { ScreenContainer,LogoImage, SignUpButtonContainer } from "./styled"
 import LoginForm from "./LoginForm"
 import { Button } from "@mui/material"
 import { goToSignUpPage } from "../../routes/coordinator"
-import { primaryColor, secundaryColor } from "../../constants/colors"
 import { useNavigate } from "react-router-dom"
+import { unprotectedPage } from "../../routes/unprotectedPage"
+
 
 
 
 const LoginPage = () => {
     const navigate = useNavigate()
+    useEffect(() => {
+        unprotectedPage(navigate)
+    })
     return(
         <ScreenContainer>
             <LogoImage src={logo} />

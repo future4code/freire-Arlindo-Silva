@@ -18,6 +18,7 @@ export const CardContainer = styled.div`
         font-size: 18px;
         font-weight: 500;
         text-align: justify;
+        word-wrap: break-word;
     }
     & > div{
         color: #6F6F6F;
