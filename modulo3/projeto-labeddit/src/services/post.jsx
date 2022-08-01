@@ -44,7 +44,6 @@ export const createComment = (body, id, clear, setIsLoading, getComments, setPos
 export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
   const url = `${BASE_URL}/${type}/${id}/votes`
   if (userVote === null) {
-    console.log("entrei");
     const body = {
       direction: 1
     }
@@ -54,7 +53,6 @@ export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
       }
     })
       .then((res) => {
-        console.log("sucess");
         setUserVote(1)
         setVotes(`${Number(votes) + 1}`)
       })
@@ -63,7 +61,6 @@ export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
         
       })
     }else if (userVote === -1) {
-      console.log("entrei");
       const body = {
         direction: 1
       }
@@ -73,7 +70,6 @@ export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
         }
       })
         .then((res) => {
-          console.log("sucess");
           setUserVote(1)
           setVotes(`${Number(votes) + 2}`)
         })
@@ -88,7 +84,6 @@ export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
           }
         })
           .then((res) => {
-            console.log("sucess");
             setUserVote(null)
             setVotes(`${Number(votes) - 1}`)
           })
@@ -103,7 +98,6 @@ export const onVote = (id, setUserVote, setVotes, votes, userVote, type) => {
 export const onUnVote = (id, setUserVote, setVotes, votes, userVote, type) => {
   const url = `${BASE_URL}/${type}/${id}/votes`
   if (userVote === null) {
-    console.log("entrei");
     const body = {
       direction: -1
     }
@@ -113,7 +107,6 @@ export const onUnVote = (id, setUserVote, setVotes, votes, userVote, type) => {
       }
     })
       .then((res) => {
-        console.log("sucess");
         setUserVote(-1)
         setVotes(`${Number(votes) - 1}`)
       })
@@ -122,7 +115,6 @@ export const onUnVote = (id, setUserVote, setVotes, votes, userVote, type) => {
         
       })
   }else if (userVote === 1) {
-    console.log("entrei");
     const body = {
       direction: -1
     }
@@ -132,7 +124,6 @@ export const onUnVote = (id, setUserVote, setVotes, votes, userVote, type) => {
       }
     })
       .then((res) => {
-        console.log("sucess");
         setUserVote(-1)
         setVotes(`${Number(votes) - 2}`)
       })
@@ -147,7 +138,6 @@ export const onUnVote = (id, setUserVote, setVotes, votes, userVote, type) => {
       }
     })
       .then((res) => {
-        console.log("sucess");
         setUserVote(null)
         setVotes(`${Number(votes) + 1}`)
       })

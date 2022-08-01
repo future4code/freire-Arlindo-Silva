@@ -47,8 +47,7 @@ const FeedPage = () => {
        getPosts(params.page)
     }, [params])
     
-    console.log(posts);
-    
+   
           return(
         <ScreenContainer> 
             <Header/>
