@@ -1,13 +1,17 @@
 import React, { useEffect, useState} from "react"
 import Header from "../../components/Header/Header"
-import { ScreenContainer, PostsContainer } from "./styled";
+import { ScreenContainer, PostsContainer, Nav } from "./styled";
 import NewPost from "./NewPost";
-import useRequestData from "../../hooks/useRequestData";
 import { BASE_URL } from "../../constants/urls";
 import PostCard from "../../components/PostCard/PostCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { protectedPage } from "../../routes/protectedPage";
 import axios from "axios";
+import { Hr } from "../../styled";
+import { NavigateNext, NavigateBefore } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import {CircularProgress} from "@mui/material";
+
 
 
 const FeedPage = () => {
@@ -43,17 +47,27 @@ const FeedPage = () => {
        getPosts(params.page)
     }, [params])
     
+    console.log(posts);
+    
           return(
         <ScreenContainer> 
             <Header/>
             <NewPost getPosts={getPosts}/>
-            <hr />
+            <Hr/>
             <PostsContainer>
-                {posts && posts.map(post => {return <PostCard key={post.id} post={post}/>})}                 
+                
+                {posts && (posts.length > 0 ?
+                posts.map(post => {return <PostCard key={post.id} post={post}/>})
+                :
+                <CircularProgress/>)
+                }                 
             </PostsContainer>
-            <button onClick={() => updatePage(`${prevPage}`)}>Anterior</button>
-            <p>Page: {params.page}</p>
-            <button onClick={() => updatePage(`${nextPage}`)}>Pular</button>
+            <Nav>
+              <IconButton onClick={() => updatePage(`${prevPage}`)}><NavigateBefore/></IconButton>
+              <p>Página {params.page}</p>
+              <IconButton onClick={() => updatePage(`${nextPage}`)}><NavigateNext/></IconButton>
+
+            </Nav>
                       
             
         

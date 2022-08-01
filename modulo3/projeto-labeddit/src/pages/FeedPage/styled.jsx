@@ -1,18 +1,10 @@
 import styled from "styled-components"
-import { primaryColor, secundaryColor } from "../../constants/colors"
 
 export const ScreenContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;   
     & hr{
-        width: 90vw;
-        max-width: 400px;
-        margin: 20px 0;
-        height: 1px;
-        border: none;
-        border-radius: 100px;
-        background-image: linear-gradient(to right, ${secundaryColor} 0%, ${primaryColor}  51%, ${secundaryColor}  100%);
     }
 
 
@@ -32,4 +24,11 @@ export const PostsContainer = styled.div`
     flex-direction: column;
     gap: 1em;
     margin-bottom: 1em;
+    align-items: center;
+`
+
+export const Nav = styled.nav`
+    display: flex;
+    justify-content: space-around;
+    font-weight: 500;
 `

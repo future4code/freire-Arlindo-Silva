@@ -11,6 +11,7 @@ export const CardContainer = styled.div`
     box-sizing: border-box;
     padding: 1em;
     text-align: left;
+    margin-bottom: 1em;
     & > :first-child{
         padding: 0;
         margin: 0;

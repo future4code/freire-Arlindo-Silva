@@ -7,6 +7,7 @@ import { Button } from "@mui/material"
 import { goToSignUpPage } from "../../routes/coordinator"
 import { useNavigate } from "react-router-dom"
 import { unprotectedPage } from "../../routes/unprotectedPage"
+import { Hr } from "../../styled"
 
 
 
@@ -21,6 +22,7 @@ const LoginPage = () => {
             <LogoImage src={logo} />
             <img src={text} alt="" />
             <LoginForm />
+            <Hr/>
             <SignUpButtonContainer>
                 <Button
                 onClick={() => goToSignUpPage(navigate)}
