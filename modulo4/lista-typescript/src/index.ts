@@ -239,5 +239,64 @@ if(exercicio8("19/06/1999", "20/05/2005")){
 
 // Exercicio 9
 
+const exercicio9 = (palavra: string):number => {
+    let anagramas: number = 1
+    if (palavra.length === 0 || palavra.length === 1) {
+        anagramas = 1
+        return anagramas
+    }else{
+        for (let index = 0; index < palavra.length; index++) {
+            anagramas = anagramas * (palavra.length - index)            
+        }
+        return anagramas
+    }
+}
+
+const anagramas : number = exercicio9("mesa")
+
+console.log(anagramas);
+
+// Exercicio 10
+
+const exercicio10 = (cpf: string) => {
+    let cpfNumber: string = cpf.replace(/[^0-9]/g,'')
+    
+    if (cpfNumber.length === 11) {        
+        let seconDv: number = 0
+        let firstDv: number = 0
+        for (let index = 0; index < 9; index++) {
+            firstDv = firstDv + (Number(cpfNumber[index]) * (10 - index))            
+        }
+        for (let index = 0; index < 10; index++) {
+            if (index === 9) {
+                seconDv = seconDv + (firstDv * (11 - index))            
+            }else{
+                seconDv = seconDv + (Number(cpfNumber[index]) * (11 - index))            
+
+            }            
+        }
+        firstDv = 11 - (firstDv % 11) 
+        seconDv = 11 - (seconDv % 11)
+        if (firstDv >= 10) {
+            firstDv = 0
+        }
+        if (seconDv >= 10) {
+            seconDv = 0
+        }
+        if (firstDv === Number(cpfNumber[9]) && seconDv === Number(cpfNumber[10])) {
+            console.log("CPF valido");
+            
+        }else{
+            console.log("CPF invalido");
+            
+        }        
+    }
+
+
+}
+
+exercicio10("070.200.145.04")
+
+
 
 
