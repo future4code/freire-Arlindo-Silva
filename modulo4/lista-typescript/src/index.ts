@@ -234,7 +234,10 @@ const exercicio8 = (nascimento: string, emissao: string): boolean => {
 }
 
 if(exercicio8("19/06/1999", "20/05/2005")){
-    console.log("Precisa renovar");
-    
+    console.log("Precisa renovar");    
 }
+
+// Exercicio 9
+
+
 
