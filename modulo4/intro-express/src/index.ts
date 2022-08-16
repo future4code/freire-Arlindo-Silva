@@ -26,6 +26,30 @@ app.get("/:userId/posts", (req, res) => {
     }))
 })
 
+// Deltear post do array geral de posts 
+app.delete("/posts/:postId", (req, res) => {
+    res.send(posts.filter(post => {
+        return post.id !== Number(req.params.postId)
+    }))
+})
+
+// Deletar post do array do usuario
+
+app.delete("/:userId/posts/:postId", (req, res) => {
+    res.send(posts.filter(post => {
+        return post.userId === Number(req.params.userId)
+    }).filter(post => {
+        return post.id !== Number(req.params.postId)
+    })
+    )
+})
+
+app.delete("/users/:userId", (req, res) => {
+    res.send(users.filter(user => {
+        return user.id !== Number(req.params.userId)
+    }))
+})
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

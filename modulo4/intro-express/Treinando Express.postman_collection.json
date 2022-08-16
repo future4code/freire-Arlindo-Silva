@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "2d5231f2-f078-494f-af57-9ec1f437eb68",
+		"name": "Treinando Express",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21555557"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Get Users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"posts"
+					]
+				},
+				"description": "Get Posts"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/:userId/posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/:userId/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						":userId",
+						"posts"
+					],
+					"variable": [
+						{
+							"key": "userId"
+						}
+					]
+				},
+				"description": "Get User Posts"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/users/userId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/userId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"userId"
+					]
+				},
+				"description": "Del User"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/posts/:postId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/posts/:postId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"posts",
+						":postId"
+					],
+					"variable": [
+						{
+							"key": "postId"
+						}
+					]
+				},
+				"description": "Del Post"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/userId/posts/:postId",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/userId/posts/:postId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"userId",
+						"posts",
+						":postId"
+					],
+					"variable": [
+						{
+							"key": "postId"
+						}
+					]
+				},
+				"description": "Del Post by User"
+			},
+			"response": []
+		}
+	]
+}
