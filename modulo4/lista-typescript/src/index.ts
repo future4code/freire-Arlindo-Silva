@@ -258,44 +258,62 @@ console.log(anagramas);
 
 // Exercicio 10
 
-const exercicio10 = (cpf: string) => {
+const exercicio10 = (cpf: string): boolean => {
     let cpfNumber: string = cpf.replace(/[^0-9]/g,'')
     
-    if (cpfNumber.length === 11) {        
-        let seconDv: number = 0
-        let firstDv: number = 0
-        for (let index = 0; index < 9; index++) {
-            firstDv = firstDv + (Number(cpfNumber[index]) * (10 - index))            
+    if (cpfNumber.length === 11) {   
+        let x: number = 0          
+        for (let index = 0; index < cpfNumber.length; index++) {
+            if (index === 10) {
+                if (cpfNumber[index] === cpfNumber[0]) {
+                    x = x + 1              
+                }    
+            } else {
+                if (cpfNumber[index] === cpfNumber[index + 1]) {
+                    x = x + 1           
+                }    
+            }
         }
-        for (let index = 0; index < 10; index++) {
-            if (index === 9) {
-                seconDv = seconDv + (firstDv * (11 - index))            
-            }else{
-                seconDv = seconDv + (Number(cpfNumber[index]) * (11 - index))            
-
-            }            
-        }
-        firstDv = 11 - (firstDv % 11) 
-        seconDv = 11 - (seconDv % 11)
-        if (firstDv >= 10) {
-            firstDv = 0
-        }
-        if (seconDv >= 10) {
-            seconDv = 0
-        }
-        if (firstDv === Number(cpfNumber[9]) && seconDv === Number(cpfNumber[10])) {
-            console.log("CPF valido");
-            
+        if (x === 11) {
+            console.log("O CPF não pode conter somente caracteres iguais");
+            return false            
         }else{
-            console.log("CPF invalido");
-            
-        }        
+            let seconDv: number = 0
+            let firstDv: number = 0
+            for (let index = 0; index < 9; index++) {
+                firstDv = firstDv + (Number(cpfNumber[index]) * (10 - index))            
+            }
+            for (let index = 0; index < 10; index++) {
+                if (index === 9) {
+                    seconDv = seconDv + (firstDv * (11 - index))            
+                }else{
+                    seconDv = seconDv + (Number(cpfNumber[index]) * (11 - index))            
+    
+                }            
+            }
+            firstDv = 11 - (firstDv % 11) 
+            seconDv = 11 - (seconDv % 11)
+            if (firstDv >= 10) {
+                firstDv = 0
+            }
+            if (seconDv >= 10) {
+                seconDv = 0
+            }
+            if (firstDv === Number(cpfNumber[9]) && seconDv === Number(cpfNumber[10])) {
+                console.log("CPF válido");
+                return true                
+            }else{
+                console.log("CPF inválido");
+                return false
+            }        
+        }
+    }else {
+        console.log("Digite o CPF da maneira correta '000.000.000-00'");
+        return false      
     }
-
-
 }
 
-exercicio10("070.200.145.04")
+exercicio10("147.845.987-56")
 
 
 
