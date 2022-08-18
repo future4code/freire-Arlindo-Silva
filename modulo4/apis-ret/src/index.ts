@@ -172,7 +172,7 @@ app.put('/users', (req, res) => {
         return user
       }
     })
-    res.status(200).send()
+    res.status(200).end()
     } catch (error: any) {
       res.status(codeError).send(error.message)
   }
@@ -200,7 +200,7 @@ app.patch('/users', (req, res) => {
         return user
       }
     })
-    res.status(200).send()
+    res.status(200).end()
     } catch (error: any) {
       res.status(codeError).send(error.message)
   }
