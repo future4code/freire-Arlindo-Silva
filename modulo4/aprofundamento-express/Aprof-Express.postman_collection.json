@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "de1f54e6-79c8-43f0-b2a6-684deeeeaac2",
+		"name": "Aprof-Express",
+		"description": "# Introduction\n\nAprofundando em Express\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21555557"
+	},
+	"item": [
+		{
+			"name": "/tarefas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas",
+					"path": [
+						"tarefas"
+					]
+				},
+				"description": "Puxa todas as tarefas"
+			},
+			"response": []
+		},
+		{
+			"name": "/tarefas/afazer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas/afazer",
+					"path": [
+						"tarefas",
+						"afazer"
+					]
+				},
+				"description": "Puxa apenas as tarefas incompletas"
+			},
+			"response": []
+		},
+		{
+			"name": "/tarefas/feitos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas/feitos",
+					"path": [
+						"tarefas",
+						"feitos"
+					]
+				},
+				"description": "Puxa apenas as tarefas completas"
+			},
+			"response": []
+		},
+		{
+			"name": "/tarefas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas",
+					"path": [
+						"tarefas"
+					]
+				},
+				"description": "Cria uma nova tarefa"
+			},
+			"response": []
+		},
+		{
+			"name": "/tarefas/:tarefaId/change",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas/:tarefaId/change",
+					"path": [
+						"tarefas",
+						":tarefaId",
+						"change"
+					],
+					"variable": [
+						{
+							"key": "tarefaId"
+						}
+					]
+				},
+				"description": "Altera o status de uma tarefa"
+			},
+			"response": []
+		},
+		{
+			"name": "/tarefas/:tarefaId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/tarefas/:tarefaId",
+					"path": [
+						"tarefas",
+						":tarefaId"
+					],
+					"variable": [
+						{
+							"key": "tarefaId"
+						}
+					]
+				},
+				"description": "Deleta tarefa "
+			},
+			"response": []
+		},
+		{
+			"name": "/:userId/tarefas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/:userId/tarefas",
+					"path": [
+						":userId",
+						"tarefas"
+					],
+					"variable": [
+						{
+							"key": "userId"
+						}
+					]
+				},
+				"description": "Retorna afazeres do usuario"
+			},
+			"response": []
+		}
+	]
+}
