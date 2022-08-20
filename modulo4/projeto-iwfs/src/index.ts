@@ -8,7 +8,8 @@ app.use(cors())
 type transaction = {
   value: number,
   date: string,
-  description: string
+  description: string,
+  pay?: boolean
 }
 
 type account = {
@@ -41,9 +42,22 @@ let accounts: account[] = [
         value: -30,
         date: '18/08/2022',
         description: 'Corte de cabelo'
+      },
+      {
+        value: 80,
+        date: '19/08/2022',
+        description: 'Shopping'
       }
     ]
+  },
+  {
+    name: 'Pedrinho',
+    cpf: '01274344530',
+    birthDate: '10/04/1995',
+    balance: 0,
+    transactions: []
   }
+
 ]
 
 app.post('/accounts', (req, res) => {
@@ -192,7 +206,8 @@ app.put('/accounts/account', (req, res) => {
           transactions: [...account.transactions, {
             value: value,
             date: todayString,
-            description: "Depósito de dinheiro"
+            description: "Depósito de dinheiro",
+            pay: true
           }]
         }
       }else{
@@ -210,7 +225,6 @@ app.post('/accounts/account/:cpf', (req, res) => {
     if (!req.params.cpf || req.params.cpf === ':cpf') {
       errorCode = 404
       throw new Error("Please inform CPF");
-      
     }
 
     const cpf = req.params.cpf as string
@@ -226,12 +240,23 @@ app.post('/accounts/account/:cpf', (req, res) => {
       date = todayString
     }
 
+    const dateSplit = date.split('/')
+    const day = Number(dateSplit[0]);
+    const month = Number(dateSplit[1]);
+    const year = Number(dateSplit[2]);  
+    let dateCheck = new Date(year, month - 1, day);
+    const diff =  today.getTime() - dateCheck.getTime()
+    const days: number = Number(((diff / (1000 * 60 * 60 * 24))))
+    
+    if (days >= 1) {
+      errorCode = 422
+      throw new Error("enter a valid date");      
+    }
+
     if (typeof(date) !== 'string' || typeof(value) !== 'number' || typeof(description) !== 'string') {
       errorCode = 422
       throw new Error("Check the parameters");
     }
-
-    const dateSplit = date.split('/' || '');
 
     if (
       (isNaN(Number(dateSplit[0])) || Number(dateSplit[0]) === 0 || dateSplit[0].length !== 2 || Number(dateSplit[0]) > 31 ) || 
@@ -243,6 +268,10 @@ app.post('/accounts/account/:cpf', (req, res) => {
 
     accounts = accounts.map(account => {
       if (account.cpf === cpf) {
+        if (account.balance < value) {
+          errorCode = 400
+          throw new Error("insufficient funds");          
+        }
         return{
           ...account,
           transactions: [
@@ -268,6 +297,8 @@ app.post('/accounts/account/:cpf', (req, res) => {
 app.put('/accounts', (req, res) => {
   try {
     accounts = accounts.map(account => {
+      let pay: number = 0
+
       for (const transaction of account.transactions) {
         const dateSplit = transaction.date.split('/')
         const day = Number(dateSplit[0]);
@@ -275,16 +306,103 @@ app.put('/accounts', (req, res) => {
         const year = Number(dateSplit[2]);  
         let date = new Date(year, month - 1, day);
         const diff =  today.getTime() - date.getTime()
-        const days: number = Number(((diff / (1000 * 60 * 60 * 24)).toFixed(1))[0])
-        if (days > 0) {
-          
-        } else {
-          
+        const days: number = diff / (1000 * 60 * 60 * 24)       
+        
+        if (days >= 1 && !transaction.pay ) {
+          pay = pay + transaction.value
+          transaction.pay = true
+        } 
+      }
+      
+      if (pay !== 0) {
+        return {
+          name: account.name,
+          cpf: account.cpf,
+          birthDate: account.birthDate,
+          balance: account.balance + pay,
+          transactions: account.transactions
+        }
+      } else {
+        return account
+      }
+    })
+    res.status(200).send(accounts)
+  } catch (error: any) {
+    res.status(errorCode).send(error.message)
+  }
+})
+
+app.post('/accounts/account/:cpf/:name', (req, res) => {
+  try {
+    const {toName, toCpf, value} = req.body
+    const fromName = (req.params.name !== ':name') ? req.params.name as string : null
+    const fromCpf = (req.params.cpf !== ':cpf') ? req.params.cpf as string : null
+
+    if (!toCpf || !toName || !value || !fromCpf || !fromName) {
+      errorCode = 422
+      throw new Error("Please send the parameters");      
+    }
+
+    if (typeof(toCpf) !== 'string' || typeof(value) !== 'number' || typeof(toName) !== 'string') {
+      errorCode = 422
+      throw new Error("Check the recipient parameters");
+    }
+
+    const hasSender = accounts.filter(account => {
+      return account.cpf === fromCpf && account.name === fromName
+    })
+
+    if (hasSender.length === 0) {
+      errorCode = 404
+      throw new Error("Sender account not found");      
+    }
+
+    const hasRecipient = accounts.filter(account => {
+      return account.cpf === toCpf && account.name === toName
+    })
+
+    if (hasRecipient.length === 0) {
+      errorCode = 404
+      throw new Error("Recipient account not found");      
+    }
+
+    const hasBalance = accounts.filter(account => {
+      if ((account.cpf === fromCpf) && (account.name === fromName)) {
+        if (value < account.balance) {
+          return account.balance
         }
       }
-      return account
     })
-    res.send
+
+    if (hasBalance.length === 0) {
+      errorCode = 400
+      throw new Error("insufficient funds");
+    }    
+    
+    accounts = accounts.map(account => {
+      if ((account.cpf === fromCpf) && (account.name === fromName)) {
+        return {
+          ...account,
+          transactions: [...account.transactions, {
+            value: -value,
+            date: todayString,
+            description: "Trasferencia entre Contas"
+          }]
+        }
+      }else if ((account.cpf === toCpf) && (account.name === toName)) {
+        return {
+          ...account,
+          transactions: [...account.transactions, {
+            value: value,
+            date: todayString,
+            description: "Trasferencia entre Contas"
+          }]
+        }
+      }else{
+        return account
+      }
+    })
+    res.status(200).send(accounts)
   } catch (error: any) {
     res.status(errorCode).send(error.message)
   }
