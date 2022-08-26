@@ -76,17 +76,17 @@ app.post('/accounts', (req, res) => {
       (isNaN(Number(dateSplit[1])) || Number(dateSplit[1]) === 0 || dateSplit[1].length !== 2 || Number(dateSplit[1]) > 12 ) || 
       (isNaN(Number(dateSplit[2])) || Number(dateSplit[2]) === 0 || dateSplit[2].length !== 4)) {      
         errorCode = 422
-        res.send('invalid parameter: birtDate');    
+        throw new Error('invalid parameter: birtDate');    
     }
 
     if (typeof(name) !== 'string') {
       errorCode = 422
-      res.send('invalid parameter: name')
+      throw new Error('invalid parameter: name')
     }
 
     if (typeof(cpf) !== 'string' || isNaN(Number(cpf)) || cpf.length !== 11 || cpf.includes(` `)) {
       errorCode = 422
-      res.send('invalid parameter: CPF')
+      throw new Error('invalid parameter: CPF')
     }
     
     const day = dateSplit[0];
