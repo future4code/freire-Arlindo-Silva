@@ -198,6 +198,44 @@ app.post('/task', async (req, res) => {
   }
 })
 
+const getTaskDelayed = async () => {
+  const tasks = await connection.raw(`
+    SELECT task.id as id, creator_user_id, title, description, limit_date, nickname
+    FROM ToDoListTask as task
+    LEFT JOIN ToDoListUser as user ON task.creator_user_id = user.id
+    WHERE task.limit_date < CURDATE()
+  `)
+  return tasks[0]
+}
+
+app.get('/task/delayed',async (req, res) => {
+  try {
+    let tasks: any[] = await getTaskDelayed()
+    if (tasks.length === 0) {
+      errorCode = 422
+      throw new Error("Task not found");    
+    }
+    tasks = tasks.map((task) => {
+      const limitDate = revertDate(task.limit_date)
+      return  {
+        taskId: `${task.id}`,
+        title: task.title,
+        description: task.description,
+        limitDate: limitDate,
+        status: task.status,
+        creatorUserId: task.creator_user_id,
+        creatorUserNickname: task.nickname
+      }    
+    })
+    res.status(200).send(tasks)
+
+
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
+
+
 const getTaskById = async (id: number): Promise<any> => {
   const result = await connection('ToDoListTask').where({id: id});
   return result[0];
@@ -217,6 +255,7 @@ app.get('/task/:id', async (req, res) => {
     }
     const limitDate = revertDate(task.limit_date)
     const user = await getUserById(task.creator_user_id)
+    const responsibleUsers = await getResponsibleUsers(task.id)
     const response =  {
       taskId: `${task.id}`,
       title: task.title,
@@ -224,7 +263,8 @@ app.get('/task/:id', async (req, res) => {
       limitDate: limitDate,
       status: task.status,
       creatorUserId: task.creator_user_id,
-      creatorUserNickname: user.nickname
+      creatorUserNickname: user.nickname, 
+      responsibleUsers: responsibleUsers
     }    
     res.status(200).send(response)
   } catch (error: any) {
@@ -233,50 +273,308 @@ app.get('/task/:id', async (req, res) => {
 })
 
 const getTaskByCreator = async (id: number) => {
-  const result = await connection('ToDoListTask').where({creator_user_id: id});
+  const result = await connection
+  .select('task.id as id', 'creator_user_id', 'title', 'description', 'limit_date', 'nickname')
+  .from('ToDoListTask as task')
+  .leftJoin('ToDoListUser as user', 'task.creator_user_id', 'user.id')
+  .where({creator_user_id: id});
   return result;
 }
 
+const getTaskByStatus = async (status: string) => {
+  const tasks = await connection
+  .select('task.id as id', 'creator_user_id', 'title', 'description', 'limit_date', 'nickname')
+  .from('ToDoListTask as task')
+  .leftJoin('ToDoListUser as user', 'task.creator_user_id', 'user.id')
+  .where({status: status});
+  return tasks;
+}
+
+const searchTask = async (search: string) => {
+  const tasks = await connection
+  .select('task.id as id', 'creator_user_id', 'title', 'description', 'limit_date', 'nickname')
+  .from('ToDoListTask as task')
+  .leftJoin('ToDoListUser as user', 'task.creator_user_id', 'user.id')
+  .whereLike('title', `%${search}%`)
+  .orWhereLike('description', `%${search}%`)
+  return tasks
+}
+
+// Task por pesquisa, criador ou status
+
 app.get('/task', async (req, res) => {
-  try {
-    const id = Number(req.query.creatorUserId)
-    if (!id) {
-      errorCode = 404
-      throw new Error("Send the User ID");      
-    }   
-    if (!id || isNaN(id)) {
-      errorCode = 422
-      throw new Error("Check the user id");      
-    }   
-    const user = await getUserById(id) 
-    if (!user) {
-      errorCode = 404
-      throw new Error("User not found");      
+  if (req.query.creatorUserId) {
+    try {
+      const id = Number(req.query.creatorUserId)
+      if (!id) {
+        errorCode = 404
+        throw new Error("Send the User ID");      
+      }   
+      if (!id || isNaN(id)) {
+        errorCode = 422
+        throw new Error("Check the user id");      
+      }   
+      let tasks = await getTaskByCreator(id)    
+      if (tasks.length === 0) {
+        errorCode = 422
+        throw new Error("Task not found");    
+      }
+      tasks = tasks.map((task) => {
+        const limitDate = revertDate(task.limit_date)
+        return  {
+          taskId: `${task.id}`,
+          title: task.title,
+          description: task.description,
+          limitDate: limitDate,
+          status: task.status,
+          creatorUserId: task.creator_user_id,
+          creatorUserNickname: task.nickname
+        }    
+      })
+      res.status(200).send(tasks)
+    } catch (error: any) {
+      res.status(errorCode).send(error.sqlMessage || error.message)
     }
-    let tasks = await getTaskByCreator(id)    
-    if (tasks.length === 0) {
-      errorCode = 422
-      throw new Error("Task not found");    
+  }else if (req.query.status) {
+    try {
+      console.log('entrei');
+      
+      const status = req.query.status
+      if (status === 'to_do' || status === 'doing' || status === 'done') {
+        let tasks = await getTaskByStatus(status)
+        
+        tasks = tasks.map((task) => {
+          const limitDate = revertDate(task.limit_date)
+          return  {
+            taskId: `${task.id}`,
+            title: task.title,
+            description: task.description,
+            limitDate: limitDate,
+            status: task.status,
+            creatorUserId: task.creator_user_id,
+            creatorUserNickname: task.nickname
+          }    
+        })
+          res.status(200).send(tasks)
+      }else{
+        errorCode = 422
+        throw new Error("Please, check the status parameter");      
+      }
+    } catch (error: any) {
+      res.status(errorCode).send(error.sqlMessage || error.message)
     }
-    tasks = tasks.map((task) => {
-      const limitDate = revertDate(task.limit_date)
-      return  {
-        taskId: `${task.id}`,
-        title: task.title,
-        description: task.description,
-        limitDate: limitDate,
-        status: task.status,
-        creatorUserId: task.creator_user_id,
-        creatorUserNickname: user.nickname
-      }    
-    })
+  }else if (req.query.search) {
+    try {
+      const search = req.query.search as string
+      if (!search) {
+        errorCode = 404
+        throw new Error("Please, send the parameter");
+      }
+      let tasks = await searchTask(search)
+      tasks = tasks.map((task) => {
+        const limitDate = revertDate(task.limit_date)
+        return  {
+          taskId: `${task.id}`,
+          title: task.title,
+          description: task.description,
+          limitDate: limitDate,
+          status: task.status,
+          creatorUserId: task.creator_user_id,
+          creatorUserNickname: task.nickname
+        }    
+      })
     res.status(200).send(tasks)
+    } catch (error: any) {
+      res.status(errorCode).send(error.sqlMessage || error.message)
+    }
+    }else{
+    res.status(404).end()
+  }
+})
+
+const searchUser = async (search: string) => {
+  const users = await connection('ToDoListUser')
+  .whereLike('email', `%${search}%`)
+  .orWhereLike('nickname', `%${search}%`)
+  return users
+}
+
+app.get('/user',async (req, res) => {
+  try {
+    const search = req.query.search as string
+    if (!search) {
+      errorCode = 404
+      throw new Error("Please, send the parameter");
+    }
+    const users = await searchUser(search)
+    res.status(200).send(users)
   } catch (error: any) {
     res.status(errorCode).send(error.sqlMessage || error.message)
   }
 })
 
+const assignToUser = async (taskId:number, userIds: number[])
+: Promise<void> => {
+  for (const user of userIds) {
+    await connection('ToDoListResponsibleUserTaskRelation')
+    .insert({
+      'task_id': taskId,
+      'responsible_user_id': user
+    })
+  }  
+}
 
+app.post('/task/responsible',async (req, res) => {
+  try {
+    const userIds = req.body.responsible_user_ids
+    const taskId = req.body.task_id
+    if (!userIds|| !taskId) {
+      errorCode = 404
+      throw new Error("Please, send all parameters");      
+    }
+    await assignToUser(taskId, userIds)
+    res.status(201).end()
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
+
+const getResponsibleUsers = async (taskId: number): Promise<any>  => {
+  const users = await connection
+  .select('id', 'nickname')
+  .from('ToDoListResponsibleUserTaskRelation')
+  .leftJoin('ToDoListUser', 'ToDoListResponsibleUserTaskRelation.responsible_user_id', 'ToDoListUser.id')
+  .where('task_id', `${taskId}`)
+  return users;
+}
+
+app.get('/task/:id/responsible',async (req, res) => {
+  try {
+    const taskId = Number(req.params.id)
+    if (!taskId || isNaN(taskId)) {
+      errorCode = 422
+      throw new Error("Please, send a valid task id");      
+    }
+    const task = await getTaskById(taskId)
+    if (task.lenght === 0) {
+      errorCode = 404
+      throw new Error("Task not found");      
+    }
+    const users = await getResponsibleUsers(taskId)
+    res.status(200).send({users: users})
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
+
+const updateTaskStatus = async (status: string, id: number[]): Promise<void>   => {
+  for (const task of id) {
+    await connection('ToDoListTask').update({status: status})
+    .where({id: task})
+  
+  }
+}
+
+app.put('/task/status/edit',async (req, res) => {
+  try {
+    const ids = req.body.task_ids as number[]
+    const status = req.body.status as string
+    if (!ids) {
+      errorCode = 422
+      throw new Error("Please, send a valid task id");      
+    }
+    for (const id of ids) {
+      const task = await getTaskById(id)    
+      if (task.lenght === 0) {
+        errorCode = 404
+        throw new Error(`Task ${id} not found`);      
+      }
+    }    
+    if (!status) {
+      errorCode = 404
+      throw new Error("Send the new task status");      
+    }
+    if (status === 'to_do' || status === 'doing' || status === 'done') {
+      await updateTaskStatus(status, ids)
+      res.status(200).end()
+      }else{
+      errorCode = 422
+      throw new Error("Please, check the status parameter");      
+    }
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
+
+const delRespUser = async (taskId: number, userId: number) => {
+  await connection.delete().from('ToDoListResponsibleUserTaskRelation')
+  .where({responsible_user_id: userId}).andWhere({task_id: taskId})
+}
+
+app.delete('/task/:taskId/responsible/:responsibleUserId',async (req, res) => {
+  try {
+    const userId = Number(req.params.responsibleUserId)
+    const taskId = Number(req.params.taskId)
+    if (!userId || !taskId || isNaN(userId) || isNaN(taskId)) {
+      errorCode = 404
+      throw new Error("Check the parameters");      
+    }
+    const task = await getTaskById(taskId)
+    const user = await getUserById(userId)
+    if (task.length === 0) {
+      errorCode = 404
+      throw new Error("Task not found");
+    }
+    if (user.length === 0) {
+      errorCode = 404
+      throw new Error("User not found");      
+    }
+    let respUser: any[] = await getResponsibleUsers(taskId)
+    console.log(respUser);
+    
+    respUser = respUser.filter(task => {
+      if (Number(task.id) === userId) {
+        return true
+      }else{
+        return false
+      }
+    })
+    if (respUser.length === 0) {
+      errorCode = 404
+      throw new Error("This User don't have a task with this id");      
+    }
+    await delRespUser(taskId, userId)
+    res.status(200).end()
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
+
+const delTask = async (id: number) => {
+  await connection('ToDoListResponsibleUserTaskRelation')
+  .delete().where('task_id', id)
+  await connection('ToDoListTask')
+  .delete().where('id', id)
+}
+
+app.delete('/task/:id',async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    if (!id || isNaN(id)) {
+      errorCode = 404
+      throw new Error("Check the task id");      
+    }
+    const task = await getTaskById(id)
+    if (!task || task.length === 0) {
+      errorCode = 404
+      throw new Error("Task not found");
+    }
+    await delTask(id)
+    res.status(200).end()
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
