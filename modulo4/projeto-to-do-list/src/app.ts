@@ -576,6 +576,31 @@ app.delete('/task/:id',async (req, res) => {
   }
 })
 
+const delUser = async (id: number) => {
+  await connection('ToDoListResponsibleUserTaskRelation')
+  .delete().where('responsible_user_id', id)
+  await connection('ToDoListUser')
+  .delete().where('id', id)
+}
+
+app.delete('/user/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    if (!id || isNaN(id)) {
+      errorCode = 404
+      throw new Error("Check the user id");      
+    }
+    const user = await getUserById(id)
+    if (!user || user.length === 0) {
+      errorCode = 404
+      throw new Error("User not found");
+    }
+    await delUser(id)
+    res.status(200).end()
+  } catch (error: any) {
+    res.status(errorCode).send(error.sqlMessage || error.message)
+  }
+})
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
     const address = server.address() as AddressInfo;
