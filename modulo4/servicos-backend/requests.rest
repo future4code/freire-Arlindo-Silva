@@ -11,9 +11,9 @@ GET http://localhost:3003/list
 post https://cep-labenu.herokuapp.com/user/05424150
 
 ###
-post https://users-ceps.herokuapp.com/user/05424150
+post https://usersceps.herokuapp.com/user/05424150
 
 ### 
-GET https://users-ceps.herokuapp.com/list
+GET https://usersceps.herokuapp.com/list
 
 
