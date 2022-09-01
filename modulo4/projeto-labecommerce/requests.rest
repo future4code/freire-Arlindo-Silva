@@ -1,2 +1,22 @@
-GET http://localhost:3003/users
+
+GET https://arlindo-labecommerce.herokuapp.com/users
+
 ###
+
+POST https://arlindo-labecommerce.herokuapp.com/users
+
+###
+
+GET https://arlindo-labecommerce.herokuapp.com/products
+
+###
+
+POST GET https://arlindo-labecommerce.herokuapp.com/products
+
+###
+
+GET https://arlindo-labecommerce.herokuapp.com/users/1662007831918/purchases
+
+###
+
+POST https://arlindo-labecommerce.herokuapp.com/users/purchases
