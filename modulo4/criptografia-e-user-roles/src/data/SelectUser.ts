@@ -8,10 +8,7 @@ export class SelectUser {
   };
 
   byId = async (id: string): Promise<any> => {
-    const result = await connection
-      .select("id, email")
-      .from("User")
-      .where({ id });
+    const result = await connection.select("*").from("User").where({ id });
 
     return result[0];
   };

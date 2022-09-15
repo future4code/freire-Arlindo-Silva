@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { SelectUser } from "../data/SelectUser";
 import { Autheticator } from "../services/Authenticator";
+import { UserRole } from "../entities/User";
 
-export default async function userData(
+export default async function getUserData(
   req: Request,
   res: Response
 ): Promise<void> {
@@ -16,8 +17,14 @@ export default async function userData(
       res.statusCode = 401;
       throw new Error("Token inválido");
     }
+
+    if (tokenData.role !== UserRole.NORMAL) {
+      res.statusCode;
+      throw new Error("Only NORMAL users can access this data");
+    }
+
     const getUser = new SelectUser();
-    const { name, id } = await getUser.byId(tokenData.id);
+    const { id, name } = await getUser.byId(tokenData.id);
 
     const user = {
       id,

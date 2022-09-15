@@ -11,9 +11,9 @@ export default async function createUser(
   res: Response
 ): Promise<void> {
   try {
-    const { email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
       res.statusCode = 422;
       throw new Error("Send all parameters");
     }
@@ -29,7 +29,8 @@ export default async function createUser(
     }
 
     const hash = new hashManager();
-    const hashPassword = hash.hash(password);
+    const hashPassword = await hash.hash(password);
+    console.log(hashPassword);
 
     const getUser = new SelectUser();
     const user = await getUser.byEmail(email);
@@ -42,12 +43,12 @@ export default async function createUser(
     const generator = new IdGenerator();
     const id: string = generator.generateId();
 
-    const newUser: User = { id, email, password: hashPassword };
+    const newUser: User = { id, name, email, password: hashPassword, role };
 
     await insertUser(newUser);
 
     const newToken = new Autheticator();
-    const token = newToken.generateToken({ id });
+    const token = newToken.generateToken({ id, role });
 
     res.status(201).send({ token });
   } catch (error: any) {

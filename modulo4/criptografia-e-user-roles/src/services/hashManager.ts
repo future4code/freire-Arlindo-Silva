@@ -18,6 +18,8 @@ export class hashManager {
 
   async compare(plaintext: string, hash: string): Promise<boolean> {
     const hashCompare: boolean = await bcrypt.compare(plaintext, hash);
+    console.log(hashCompare);
+
     return hashCompare;
   }
 }
