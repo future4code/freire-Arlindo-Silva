@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 
-export class hashManager {
+export class HashManager {
   async hash(plaintext: string): Promise<string> {
     //para esconder o texto precisamos:
     //do plaintext (que é nosso parametro s)
