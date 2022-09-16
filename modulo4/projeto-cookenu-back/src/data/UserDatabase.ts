@@ -9,6 +9,7 @@ export class UserDatabase extends BaseDatabase {
       throw new Error(error.sqlMessage || error.message);
     }
   }
+
   public async getByEmail(email: string): Promise<User | null> {
     try {
       const data = await BaseDatabase.connection
@@ -22,6 +23,7 @@ export class UserDatabase extends BaseDatabase {
       throw new Error(error.sqlMessage || error.message);
     }
   }
+
   public async getById(id: string): Promise<User | null> {
     try {
       const data = await BaseDatabase.connection
@@ -31,6 +33,57 @@ export class UserDatabase extends BaseDatabase {
 
       const user = User.toUserModel(data[0]);
       return user;
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  public async insertFollow(
+    followerId: string,
+    followingId: string
+  ): Promise<void> {
+    try {
+      await BaseDatabase.connection("cookenu_follower").insert({
+        follower_id: followerId,
+        following_id: followingId,
+      });
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  public async deleteFollow(
+    followerId: string,
+    followingId: string
+  ): Promise<void> {
+    try {
+      await BaseDatabase.connection("cookenu_follower")
+        .delete()
+        .where({ follower_id: followerId })
+        .andWhere({ following_id: followingId });
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  public async selectFeed(id: string): Promise<any> {
+    try {
+      const recipes = await BaseDatabase.connection
+        .select("cookenu_recipe.*", "cookenu_user.name")
+        .from("cookenu_follower")
+        .innerJoin(
+          "cookenu_user",
+          "cookenu_follower.following_id",
+          "cookenu_user.id"
+        )
+        .innerJoin(
+          "cookenu_recipe",
+          "cookenu_follower.following_id",
+          "cookenu_recipe.creator_id"
+        )
+        .where({ "cookenu_follower.follower_id": `${id}` });
+
+      return recipes;
     } catch (error: any) {
       throw new Error(error.sqlMessage || error.message);
     }

@@ -4,6 +4,7 @@ import { PublicDataUser, User } from "../entities/User";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
+import moment from "moment";
 
 export class UserEndPoint {
   async signUp(req: Request, res: Response) {
@@ -178,6 +179,124 @@ export class UserEndPoint {
       res.status(200).send(user);
     } catch (error: any) {
       res.send({ message: error.sqlMessage || error.message });
+    }
+  }
+
+  async follow(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization;
+
+      if (!token) {
+        res.statusCode = 404;
+        throw new Error("Missing parameters: token");
+      }
+
+      const authenticator = new Authenticator();
+
+      const tokenData = authenticator.getTokenData(token);
+
+      if (!tokenData.id || tokenData.id === "") {
+        res.statusCode = 401;
+        throw new Error("Invalid token");
+      }
+
+      const userToFollowId = req.body.userToFollowId;
+
+      if (!userToFollowId) {
+        res.statusCode = 404;
+        throw new Error("Missing parameters: userToFollowId");
+      }
+
+      const userDatabase = new UserDatabase();
+      const userToFollow = await userDatabase.getById(userToFollowId);
+
+      if (!userToFollow) {
+        res.statusCode = 404;
+        throw new Error("User not found");
+      }
+
+      await userDatabase.insertFollow(tokenData.id, userToFollowId);
+
+      res.status(200).send({ message: "Followed successfully" });
+    } catch (error: any) {
+      res.send({ message: error.sqlMessage || error.message });
+    }
+  }
+
+  async unfollow(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization;
+
+      if (!token) {
+        res.statusCode = 404;
+        throw new Error("Missing parameters: token");
+      }
+
+      const authenticator = new Authenticator();
+
+      const tokenData = authenticator.getTokenData(token);
+
+      if (!tokenData.id || tokenData.id === "") {
+        res.statusCode = 401;
+        throw new Error("Invalid token");
+      }
+
+      const userToUnfollowId = req.body.userToUnfollowId;
+
+      if (!userToUnfollowId) {
+        res.statusCode = 404;
+        throw new Error("Missing parameters: userToUnfollowId");
+      }
+
+      const userDatabase = new UserDatabase();
+      const userToFollow = await userDatabase.getById(userToUnfollowId);
+
+      if (!userToFollow) {
+        res.statusCode = 404;
+        throw new Error("User not found");
+      }
+
+      await userDatabase.deleteFollow(tokenData.id, userToUnfollowId);
+
+      res.status(200).send({ message: "Unfollowed successfully" });
+    } catch (error: any) {
+      res.send({ message: error.sqlMessage || error.message });
+    }
+  }
+
+  async feed(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization as string;
+
+      const authenticator = new Authenticator();
+
+      const tokenData = authenticator.getTokenData(token);
+
+      if (!tokenData.id || tokenData.id === "") {
+        res.statusCode = 401;
+        throw new Error("Invalid token");
+      }
+
+      const userDatabase = new UserDatabase();
+
+      const searchFeed = await userDatabase.selectFeed(tokenData.id);
+
+      const recipes: any[] = searchFeed.map((recipe: any) => {
+        return {
+          id: recipe.id,
+          title: recipe.title,
+          description: recipe.description,
+          createdAt: moment(recipe.created_at, "YYYY-MM-DD").format(
+            "DD/MM/YYYY"
+          ),
+          userId: recipe.creator_id,
+          userName: recipe.name,
+        };
+      });
+
+      res.status(200).send(recipes);
+    } catch (error: any) {
+      res.status(error.statusCode || 500).send({ message: error.message });
     }
   }
 }
