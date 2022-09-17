@@ -88,4 +88,24 @@ export class UserDatabase extends BaseDatabase {
       throw new Error(error.sqlMessage || error.message);
     }
   }
+
+  public async delete(id: string) {
+    try {
+      await BaseDatabase.connection
+        .delete()
+        .from("cookenu_follower")
+        .where({ follower_id: id })
+        .orWhere({ following_id: id });
+      await BaseDatabase.connection
+        .delete()
+        .from("cookenu_recipe")
+        .where({ creator_id: id });
+      await BaseDatabase.connection
+        .delete()
+        .from("cookenu_user")
+        .where({ id: id });
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
 }

@@ -29,6 +29,7 @@ export class RecipeDatabase extends BaseDatabase {
       throw new Error(error.sqlMessage || error.message);
     }
   }
+
   public async getByCreatorId(creatorId: string): Promise<Recipe | null> {
     try {
       const data = await BaseDatabase.connection
@@ -38,6 +39,30 @@ export class RecipeDatabase extends BaseDatabase {
 
       const recipe = Recipe.toRecipeModel(data[0]);
       return recipe;
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  public async update(id: string, recipe: Recipe): Promise<void> {
+    try {
+      await BaseDatabase.connection("cookenu_recipe")
+        .update({
+          title: recipe.getTitle(),
+          description: recipe.getDescription(),
+        })
+        .where(`id`, `${recipe.getId()}`)
+        .andWhere(`creator_id`, `${id}`);
+    } catch (error: any) {
+      throw new Error(error.sqlMessage || error.message);
+    }
+  }
+
+  public async delete(recipeId: string): Promise<void> {
+    try {
+      await BaseDatabase.connection("cookenu_recipe")
+        .delete()
+        .where(`id`, `${recipeId}`);
     } catch (error: any) {
       throw new Error(error.sqlMessage || error.message);
     }

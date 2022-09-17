@@ -4,14 +4,15 @@ import { PublicDataUser, User } from "../entities/User";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
+import { UserRole } from "../entities/User";
 import moment from "moment";
 
 export class UserEndPoint {
   async signUp(req: Request, res: Response) {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, role } = req.body;
 
-      if (!name || !email || !password) {
+      if (!name || !email || !password || !role) {
         res.statusCode = 404;
         throw new Error("Missing parameters");
       }
@@ -45,12 +46,12 @@ export class UserEndPoint {
       const hashManager = new HashManager();
       const hashPassword = await hashManager.hash(password);
 
-      const newUser = new User(id, name, email, hashPassword);
+      const newUser = new User(id, name, email, hashPassword, role);
 
       await userDatabase.insert(newUser);
       const authenticator = new Authenticator();
 
-      const token = authenticator.generateToken({ id });
+      const token = authenticator.generateToken({ id, role });
 
       res.status(201).send({ access_token: token });
     } catch (error: any) {
@@ -97,7 +98,10 @@ export class UserEndPoint {
 
       const authenticator = new Authenticator();
 
-      const token = authenticator.generateToken({ id: user.getId() });
+      const token = authenticator.generateToken({
+        id: user.getId(),
+        role: user.getRole(),
+      });
 
       res.status(200).send({ access_token: token });
     } catch (error: any) {
@@ -297,6 +301,48 @@ export class UserEndPoint {
       res.status(200).send(recipes);
     } catch (error: any) {
       res.status(error.statusCode || 500).send({ message: error.message });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization as string;
+
+      const authenticator = new Authenticator();
+
+      const tokenData = authenticator.getTokenData(token);
+
+      if (!tokenData.id || tokenData.id === "") {
+        res.statusCode = 401;
+        throw new Error("Invalid token");
+      }
+
+      if (tokenData.role !== UserRole.ADMIN) {
+        res.statusCode = 401;
+        throw new Error("Only admins can delete users");
+      }
+
+      const id = req.params.id;
+
+      if (!id || id === ":id") {
+        res.statusCode = 404;
+        throw new Error("Missing parameters: id");
+      }
+
+      const userDatabase = new UserDatabase();
+
+      const user = await userDatabase.getById(id);
+
+      if (!user) {
+        res.statusCode = 404;
+        throw new Error("User not found");
+      }
+
+      await userDatabase.delete(id);
+
+      res.status(200).send({ message: "User deleted" });
+    } catch (error: any) {
+      res.send({ message: error.sqlMessage || error.message });
     }
   }
 }

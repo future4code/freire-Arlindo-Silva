@@ -12,6 +12,9 @@ app.post("/user/unfollow", userEndpoint.unfollow);
 app.get("/user/feed", userEndpoint.feed);
 app.get("/user/profile", userEndpoint.getProfile);
 app.get("/user/:id", userEndpoint.getAnotherProfile);
+app.delete("/user/:id", userEndpoint.delete);
 
 app.post("/recipe", recipeEndpoint.create);
+app.put("/recipe/:id", recipeEndpoint.editRecipe);
 app.get("/recipe/:id", recipeEndpoint.getRecipe);
+app.delete("/recipe/:id", recipeEndpoint.deleteRecipe);
