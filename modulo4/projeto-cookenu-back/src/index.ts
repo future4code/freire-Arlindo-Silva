@@ -2,6 +2,16 @@ import app from "./app";
 import { RecipeEndpoint } from "./endpoints/RecipeEndpoint";
 import { UserEndPoint } from "./endpoints/UserEndpoint";
 
+let number: number = 40;
+let count: number = 0;
+
+for (let index = 1; index < 41; index++) {
+  const soma: number = index * 40;
+  count = count + soma;
+}
+
+console.log(count);
+
 const userEndpoint = new UserEndPoint();
 const recipeEndpoint = new RecipeEndpoint();
 
