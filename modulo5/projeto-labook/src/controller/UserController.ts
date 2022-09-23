@@ -1,21 +1,31 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
-import { ParamsError } from "../errors/ParamsError";
+import { BaseError } from "../errors/BaseError";
+import { ISignupInputDTO } from "../models/User";
 
 export class UserController {
   constructor(private userBusiness: UserBusiness) {}
 
-  public async signup(req: Request, res: Response) {
+  public signup = async (req: Request, res: Response) => {
     try {
-      const { name, password, email } = req.body;
+      const { name, password, email, role } = req.body;
 
-      if (!name || !password || !email) {
-        throw new ParamsError();
-      }
+      const user: ISignupInputDTO = {
+        name,
+        password,
+        email,
+        role,
+      };
+
+      const token = await this.userBusiness.signup(user);
+
+      res.status(201).send({ access_token: token });
     } catch (error: any) {
-      res.send({ message: error.sqlMessage || error.message });
+      res
+        .status(error.statusCode)
+        .send({ message: error.sqlMessage || error.message });
     }
-  }
+  };
 
   public async login(req: Request, res: Response) {}
 
