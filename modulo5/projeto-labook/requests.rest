@@ -1,8 +1,8 @@
 ### Endpoint de teste
-GET http://localhost:3003/ping
+GET https://arlindo-labook.herokuapp.com/ping
 
 ###
-POST http://localhost:3003/users/signup
+POST https://arlindo-labook.herokuapp.com/users/signup
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3003/users/login
+POST https://arlindo-labook.herokuapp.com/users/login
 Content-Type: application/json
 
 {
@@ -32,29 +32,23 @@ Authorization: {{token}}
 }
 
 ###
-GET http://localhost:3003/posts
+GET https://arlindo-labook.herokuapp.com/posts
 Content-Type: application/json
 Authorization: {{token}}
 
 ###
-DELETE http://localhost:3003/posts/202
+DELETE https://arlindo-labook.herokuapp.com/posts/202
 Content-Type: application/json
 Authorization: {{token}}
 
 ###
-POST  http://localhost:3003/posts/202/like
+POST  https://arlindo-labook.herokuapp.com/posts/202/like
 Content-Type: application/json
 Authorization: {{token}}
 
 ###
-PUT  http://localhost:3003/posts/201/unlike
+PUT  https://arlindo-labook.herokuapp.com/posts/201/unlike
 Content-Type: application/json
 Authorization: {{token}}
-
-
-
-
-
-
 
 
