@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
 import { BaseError } from "../errors/BaseError";
-import { ISignupInputDTO } from "../models/User";
+import { ILoginInputDTO, ISignupInputDTO } from "../models/User";
 
 export class UserController {
   constructor(private userBusiness: UserBusiness) {}
@@ -17,9 +17,9 @@ export class UserController {
         role,
       };
 
-      const token = await this.userBusiness.signup(user);
+      const response = await this.userBusiness.signup(user);
 
-      res.status(201).send({ access_token: token });
+      res.status(201).send(response);
     } catch (error: any) {
       res
         .status(error.statusCode)
@@ -27,7 +27,22 @@ export class UserController {
     }
   };
 
-  public async login(req: Request, res: Response) {}
+  public login = async (req: Request, res: Response) => {
+    try {
+      const input: ILoginInputDTO = {
+        email: req.body.email,
+        password: req.body.password,
+      };
+
+      const response = await this.userBusiness.login(input);
+
+      res.status(200).send(response);
+    } catch (error: any) {
+      res
+        .status(error.statusCode)
+        .send({ message: error.sqlMessage || error.message });
+    }
+  };
 
   public async createPost(req: Request, res: Response) {}
 }

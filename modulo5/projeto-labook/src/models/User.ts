@@ -18,6 +18,11 @@ export interface ISignupInputDTO {
   role: USER_ROLES;
 }
 
+export interface ILoginInputDTO {
+  email: string;
+  password: string;
+}
+
 export class User {
   constructor(
     private id: string,

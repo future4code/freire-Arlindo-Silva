@@ -6,7 +6,55 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-  "name": "Carol",
-  "email": "carol@labenu.com",
+  "name": "Lara",
+  "email": "lara@labenu.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+###
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+  "email": "pedro@labenu.com",
   "password": "123456"
 }
+
+###
+@token= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTE5YjJmLWQ4MGItNDI3ZS1iNzU2LTU1MDZlMDhkNjllZiIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NjQxNTgwMTUsImV4cCI6MTY2NDI0NDQxNX0.Cuk7pa2M80EMcjbQyJlnRObe-RRI7TiQpjVS3mF9yPM
+POST http://localhost:3003/posts
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "content": "Eu preciso de um empregooooo"
+}
+
+###
+GET http://localhost:3003/posts
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+DELETE http://localhost:3003/posts/202
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+POST  http://localhost:3003/posts/202/like
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+PUT  http://localhost:3003/posts/201/unlike
+Content-Type: application/json
+Authorization: {{token}}
+
+
+
+
+
+
+
+
