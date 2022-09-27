@@ -1,0 +1,54 @@
+### Endpoint de teste
+GET https://arlindo-labook.herokuapp.com/ping
+
+###
+POST https://arlindo-labook.herokuapp.com/users/signup
+Content-Type: application/json
+
+{
+  "name": "Lara",
+  "email": "lara@labenu.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+###
+POST https://arlindo-labook.herokuapp.com/users/login
+Content-Type: application/json
+
+{
+  "email": "pedro@labenu.com",
+  "password": "123456"
+}
+
+###
+@token= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTE5YjJmLWQ4MGItNDI3ZS1iNzU2LTU1MDZlMDhkNjllZiIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NjQxNTgwMTUsImV4cCI6MTY2NDI0NDQxNX0.Cuk7pa2M80EMcjbQyJlnRObe-RRI7TiQpjVS3mF9yPM
+POST http://localhost:3003/posts
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "content": "Eu preciso de um empregooooo"
+}
+
+###
+GET https://arlindo-labook.herokuapp.com/posts
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+DELETE https://arlindo-labook.herokuapp.com/posts/202
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+POST  https://arlindo-labook.herokuapp.com/posts/202/like
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+PUT  https://arlindo-labook.herokuapp.com/posts/201/unlike
+Content-Type: application/json
+Authorization: {{token}}
+
+
