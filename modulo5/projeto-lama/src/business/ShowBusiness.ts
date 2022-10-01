@@ -118,7 +118,9 @@ export class ShowBusiness {
       throw new AuthenticationError("Invalid Token");
     }
 
-    const show: IShowDb = await this.showDatabase.selectById(showId);
+    const show: IShowDb | undefined = await this.showDatabase.selectById(
+      showId
+    );
 
     if (!show) {
       throw new NotFoundError("Show not found");
@@ -129,9 +131,8 @@ export class ShowBusiness {
       show_id: showId,
     };
 
-    const ticket: ITicketDB = await this.showDatabase.selectByUserAndShow(
-      dataToSearch
-    );
+    const ticket: ITicketDB | undefined =
+      await this.showDatabase.selectByUserAndShow(dataToSearch);
 
     if (ticket) {
       throw new ConflictError("Only one ticket per user is allowed");
@@ -167,7 +168,9 @@ export class ShowBusiness {
       throw new AuthenticationError("Invalid Token");
     }
 
-    const show: IShowDb = await this.showDatabase.selectById(showId);
+    const show: IShowDb | undefined = await this.showDatabase.selectById(
+      showId
+    );
 
     if (!show) {
       throw new NotFoundError("Show not found");
@@ -178,12 +181,11 @@ export class ShowBusiness {
       show_id: showId,
     };
 
-    const ticket: ITicketDB = await this.showDatabase.selectByUserAndShow(
-      dataToSearch
-    );
+    const ticket: ITicketDB | undefined =
+      await this.showDatabase.selectByUserAndShow(dataToSearch);
 
     if (!ticket) {
-      throw new ConflictError("No have reservation for this show");
+      throw new NotFoundError("No have reservation for this show");
     }
 
     await this.showDatabase.deleteReservation(ticket.id);

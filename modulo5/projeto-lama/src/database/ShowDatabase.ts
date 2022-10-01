@@ -20,7 +20,7 @@ export class ShowDatabase extends BaseDatabase {
     return shows;
   };
 
-  public selectById = async (id: string): Promise<IShowDb> => {
+  public selectById = async (id: string): Promise<IShowDb | undefined> => {
     const shows: IShowDb[] = await BaseDatabase.connection
       .select()
       .from(ShowDatabase.SHOW_TABLE)
@@ -30,7 +30,9 @@ export class ShowDatabase extends BaseDatabase {
     return show;
   };
 
-  public selectByUserAndShow = async (input: IShowUserInputDTO) => {
+  public selectByUserAndShow = async (
+    input: IShowUserInputDTO
+  ): Promise<ITicketDB | undefined> => {
     const tickets: ITicketDB[] = await BaseDatabase.connection
       .select()
       .from(ShowDatabase.TICKET_TABLE)
@@ -41,7 +43,7 @@ export class ShowDatabase extends BaseDatabase {
     return ticket;
   };
 
-  public bookTicket = async (ticket: Ticket) => {
+  public bookTicket = async (ticket: Ticket): Promise<void> => {
     const newTicket: ITicketDB = ticket.toIShowDBModel();
 
     await BaseDatabase.connection(ShowDatabase.TICKET_TABLE).insert(newTicket);
@@ -54,7 +56,7 @@ export class ShowDatabase extends BaseDatabase {
     );
   };
 
-  public deleteReservation = async (id: string) => {
+  public deleteReservation = async (id: string): Promise<void> => {
     await BaseDatabase.connection(ShowDatabase.TICKET_TABLE)
       .delete()
       .where({ id });

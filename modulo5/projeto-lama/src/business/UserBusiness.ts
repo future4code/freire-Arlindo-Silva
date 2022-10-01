@@ -43,11 +43,11 @@ export class UserBusiness {
     }
 
     if (password.length < 6) {
-      throw new ParamsError("Password must be 6 or more characters");
+      throw new UnprocessableError("Password must be 6 or more characters");
     }
 
     if (name.length < 3) {
-      throw new ParamsError("Name must be 3 or more characters");
+      throw new UnprocessableError("Name must be 3 or more characters");
     }
 
     if (
@@ -96,7 +96,7 @@ export class UserBusiness {
     }
 
     if (password.length < 6) {
-      throw new ParamsError("Password must be 6 or more characters");
+      throw new UnprocessableError("Password must be 6 or more characters");
     }
 
     if (
