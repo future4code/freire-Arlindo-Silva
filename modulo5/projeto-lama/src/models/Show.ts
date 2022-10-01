@@ -5,6 +5,12 @@ export interface IShowDb {
   available_tickets?: number;
 }
 
+export interface IShowsOutput {
+  band: string;
+  startsAt: string;
+  availableTickets: number;
+}
+
 export interface ICreateShowDTO {
   band: string;
   startsAt: string;
@@ -26,4 +32,12 @@ export class Show {
       starts_at: this.startsAt,
     };
   };
+
+  public getId = () => this.id;
+
+  public getBand = () => this.band;
+
+  public getStartsAt = () => this.startsAt;
+
+  public getAvailableTickets = () => this.availableTickets;
 }
