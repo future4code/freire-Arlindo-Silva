@@ -4,35 +4,58 @@ export interface IOrderDB {
 
 export interface IOrderItemDB {
   id: string;
+  order_id: string;
   pizza_name: string;
   pizza_price: number;
   quantity: number;
-  order_id: string;
 }
 
 export interface IOrderItem {
   id: string;
-  pizza_name: string;
-  price: number;
+  pizzaName: string;
+  pizzaPrice: number;
   quantity: number;
-  order_id: string;
+  orderId: string;
+}
+
+export interface IOrderOutputDTO {
+  id: string;
+  total: number;
+  items: IOrderItem[];
+}
+
+export interface IGetOrdersOutputDTO {
+  message: string;
+  orders: IOrderOutputDTO[];
+}
+
+export interface ICreateOrderOutputDTO {
+  message: string;
+  order: IOrderOutputDTO;
+}
+
+export interface ICreateOrderInputDTO {
+  pizzas: {
+    name: string;
+    quantity: number;
+  }[];
 }
 
 export class Order {
   private total: number = 0;
-  constructor(private id: string, private itens: IOrderItem[]) {}
+  constructor(private id: string, private items: IOrderItem[]) {}
 
-  // public getPizza = (): IPizzaOutputDTO => {
-  //   return {
-  //     name: this.name,
-  //     price: this.price,
-  //     ingredients: this.ingredients,
-  //   };
-  // };
+  public getOrder = (): IOrderOutputDTO => {
+    return {
+      id: this.id,
+      total: this.calculateTotal(),
+      items: this.items,
+    };
+  };
 
   public calculateTotal = (): number => {
-    for (const item of this.itens) {
-      this.total = this.total + item.price * item.quantity;
+    for (const item of this.items) {
+      this.total = this.total + item.pizzaPrice * item.quantity;
     }
 
     return this.total;
@@ -44,18 +67,18 @@ export class Order {
 
   public setId = (newId: string) => (this.id = newId);
 
-  public setItens = (newItens: IOrderItem[]) => {
-    this.itens = newItens;
+  public setitems = (newitems: IOrderItem[]) => {
+    this.items = newitems;
     this.calculateTotal();
   };
 
   public addItem = (newItem: IOrderItem) => {
-    this.itens.push(newItem);
+    this.items.push(newItem);
     this.calculateTotal();
   };
 
   public removeItem = (itemToRemove: IOrderItem) => {
-    this.itens = this.itens.filter((item) => item !== itemToRemove);
+    this.items = this.items.filter((item) => item !== itemToRemove);
     this.calculateTotal();
   };
 }

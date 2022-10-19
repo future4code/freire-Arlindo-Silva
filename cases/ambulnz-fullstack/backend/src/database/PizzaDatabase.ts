@@ -44,8 +44,13 @@ export class PizzaDatabase extends BaseDatabase {
     )
       .select()
       .where({ name });
+
     const pizza = pizzas[0];
 
-    return pizza;
+    if (pizzas.length > 0) {
+      return pizza;
+    } else {
+      return undefined;
+    }
   };
 }

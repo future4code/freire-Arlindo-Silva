@@ -56,7 +56,7 @@ class Migrations extends BaseDatabase {
         );
         
         CREATE TABLE IF NOT EXISTS ${OrderDatabase.TABLE_ORDER_ITEM} (
-            id MEDIUMINT AUTO_INCREMENT PRIMARY KEY,
+            id VARCHAR(255) PRIMARY KEY,
             order_id VARCHAR(255) NOT NULL,
             pizza_name VARCHAR(255) NOT NULL,
             pizza_price DECIMAL(3,2) NOT NULL,            
