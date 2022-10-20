@@ -37,6 +37,7 @@ export interface ICreateOrderOutputDTO {
 export interface ICreateOrderInputDTO {
   pizzas: {
     name: string;
+    price: number;
     quantity: number;
   }[];
 }

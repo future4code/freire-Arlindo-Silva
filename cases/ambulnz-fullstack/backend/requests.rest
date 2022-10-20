@@ -19,6 +19,7 @@ Content-Type: application/json
 "pizzas": [
   {
     "name": "Bufala",
+    "price": 6,
     "quantity": 4
   }
 ]}

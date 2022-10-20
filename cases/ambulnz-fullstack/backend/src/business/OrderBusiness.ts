@@ -44,23 +44,17 @@ export class OrderBusiness {
     const orderItems: IOrderItem[] = [];
 
     for (let item of items) {
-      const pizza = await this.pizzaDatabase.getPizzaByName(item.name);
+      const orderItem: IOrderItem = {
+        id: this.idGenerator.generate(),
+        orderId: orderId,
+        pizzaName: item.name,
+        pizzaPrice: item.price,
+        quantity: item.quantity,
+      };
 
-      if (pizza) {
-        const orderItem: IOrderItem = {
-          id: this.idGenerator.generate(),
-          orderId: orderId,
-          pizzaName: item.name,
-          pizzaPrice: pizza.price,
-          quantity: item.quantity,
-        };
+      orderItems.push(orderItem);
 
-        orderItems.push(orderItem);
-
-        await this.orderDatabase.insertItemOnOrder(orderItem);
-      } else {
-        throw new NotFoundError("Pizza not found");
-      }
+      await this.orderDatabase.insertItemOnOrder(orderItem);
     }
     const order = new Order(orderId, orderItems);
 
