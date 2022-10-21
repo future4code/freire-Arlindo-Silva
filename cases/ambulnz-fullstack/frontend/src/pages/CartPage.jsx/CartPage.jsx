@@ -1,21 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import GlobalContext from "../../context/GlobalContext";
 import { CartCard, CartPageContainer } from "./styled";
-import { Button, CircularProgress, IconButton } from "@mui/material";
-import PizzaCard from "../../components/PizzaCard/PizzaCard";
+import { Button, IconButton } from "@mui/material";
 
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Header from "../../components/Header/Header";
+import OrderSuccessPopUp from "../../components/OrderSuccessPopUp/OrderSuccessPopUp";
 
 const CartPage = () => {
-  const { cart, createOrder, addToCart, removeFromCart, setCart } =
+  const { cart, createOrder, addToCart, removeFromCart, setCart, orderStatus } =
     useContext(GlobalContext);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {}, []);
 
   let itemNumber = 0;
   let total = 0;
@@ -33,6 +28,7 @@ const CartPage = () => {
           <div>
             <h3>Order:</h3>
             <Button
+              disabled={cart.length === 0}
               color="secondary"
               onClick={clearCart}
               sx={{ color: "red", textTransform: "none" }}
@@ -79,7 +75,7 @@ const CartPage = () => {
               );
             })
           ) : (
-            <p> empty cart </p>
+            <p>Empty Order!</p>
           )}
           <div>
             <h2>Total:</h2>
@@ -91,10 +87,12 @@ const CartPage = () => {
             </h2>
           </div>
         </CartCard>
+        {}
         <Button
+          disabled={cart.length === 0}
           color="secondary"
           variant="contained"
-          onClick={() => createOrder(cart, navigate)}
+          onClick={() => createOrder()}
           sx={{
             textTransform: "none",
           }}
@@ -102,6 +100,9 @@ const CartPage = () => {
           Finalize Order
         </Button>
       </CartPageContainer>
+      {orderStatus && orderStatus.isSuccess === true ? (
+        <OrderSuccessPopUp order={orderStatus.order} />
+      ) : null}
     </>
   );
 };

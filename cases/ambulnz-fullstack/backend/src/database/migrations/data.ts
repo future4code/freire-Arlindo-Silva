@@ -13,6 +13,8 @@ const ingredients: string[] = [
   "oregano",
   "oil",
   "spicy salami",
+  "jerked beef",
+  "banana",
 ];
 
 export const ingredientsDB: IIngredientsDB[] = ingredients.map(
@@ -39,6 +41,10 @@ export const pizzas: IPizzaDB[] = [
   {
     name: "Pizza Bianca",
     price: 5,
+  },
+  {
+    name: "Baiana",
+    price: 9.5,
   },
 ];
 
@@ -98,5 +104,17 @@ export const pizzasIngredients: IPizzasIngredientsDB[] = [
   {
     pizza_name: "Pizza Bianca",
     ingredient_name: "oregano",
+  },
+  {
+    pizza_name: "Baiana",
+    ingredient_name: "jerked beef",
+  },
+  {
+    pizza_name: "Baiana",
+    ingredient_name: "mozzarella",
+  },
+  {
+    pizza_name: "Baiana",
+    ingredient_name: "banana",
   },
 ];

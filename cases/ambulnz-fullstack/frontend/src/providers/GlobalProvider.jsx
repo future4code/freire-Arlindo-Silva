@@ -6,6 +6,10 @@ import { BASE_URL_PIZZAS, BASE_URL_ORDERS } from "../assets/BASE_URL";
 export default function GlobalProvider(props) {
   const [cart, setCart] = useState([]);
   const [pizzas, setPizzas] = useState([]);
+  const [orderStatus, setOrderStatus] = useState({
+    isSuccess: false,
+    order: null,
+  });
 
   useEffect(() => {
     getPizzas();
@@ -23,24 +27,28 @@ export default function GlobalProvider(props) {
         // setIsLoading(false);
       })
       .catch((error) => {
+        console.log(error);
         // setIsLoading(false);
       });
   };
 
-  const createOrder = (order, navigate) => {
+  const createOrder = () => {
     // setIsLoading(true);
     const body = {
-      pizzas: order,
+      pizzas: cart,
     };
     axios
       .post(`${BASE_URL_ORDERS}`, body)
       .then((response) => {
+        setOrderStatus({
+          isSuccess: true,
+          order: response.data.order,
+        });
+        localStorage.removeItem("cart");
         setCart([]);
-        navigate("/");
-        // setIsLoading(false);
       })
       .catch((error) => {
-        // setIsLoading(false);
+        console.log(error);
       });
   };
 
@@ -100,6 +108,8 @@ export default function GlobalProvider(props) {
         addToCart,
         removeFromCart,
         createOrder,
+        orderStatus,
+        setOrderStatus,
       }}
     >
       {props.children}
