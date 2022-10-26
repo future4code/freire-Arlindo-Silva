@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeaderContainer } from "./styled";
-import GlobalContext from "../../context/GlobalContext";
 
 import logo from "../../assets/logo-header.svg";
 
@@ -10,7 +9,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <img src={logo} alt="logo" />
+      <img src={logo} alt="logo" onClick={() => navigate("/1")} />
     </HeaderContainer>
   );
 };

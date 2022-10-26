@@ -5,10 +5,11 @@ export const HeaderContainer = styled.div`
   height: 56px;
   display: flex;
   align-items: center;
-  padding-left: 112px;
+  padding-left: 8vw;
   box-sizing: border-box;
   > img {
     height: 24.03px;
+    cursor: pointer;
   }
   @media (max-width: 850px) {
     justify-content: center;

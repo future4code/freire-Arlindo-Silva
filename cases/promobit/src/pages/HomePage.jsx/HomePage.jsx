@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import GlobalContext from "../../context/GlobalContext";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   A,
   Apage,
@@ -20,12 +19,16 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState([]);
 
-  const [page, setPage] = useState(1);
+  const pathParams = useParams();
+
+  const [page, setPage] = useState(Number(pathParams.page) || 1);
   const [pages, setPages] = useState([]);
 
   const limitPage = 500;
 
   const [moviesList, setMoviesList] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCategories();
@@ -34,7 +37,9 @@ const HomePage = () => {
 
   const getPopularMovies = (pageNumber = page) => {
     axios
-      .get(`${BASE_URL}movie/popular?api_key=${API_KEY}&page=${pageNumber}`)
+      .get(
+        `${BASE_URL}movie/popular?api_key=${API_KEY}&page=${pageNumber}&language=${LANGUAGE}`
+      )
       .then((response) => {
         const newMoviesList = response.data.results;
         setMoviesList(newMoviesList);
@@ -54,6 +59,7 @@ const HomePage = () => {
   };
 
   const changePage = (page) => {
+    navigate(`/${page}`);
     window.scroll(0, 500);
     setMoviesList([]);
     setPage(page);
@@ -107,7 +113,7 @@ const HomePage = () => {
     <>
       <Header></Header>
       <FilterContainer>
-        <h1>Millions of movies, series and people to discover. Explore now</h1>
+        <h1>Milhões de filmes, séries e pessoas para descobrir. Explore já</h1>
         <p>FILTER BY:</p>
         <CategoriesContainer>
           {categories.length > 0
