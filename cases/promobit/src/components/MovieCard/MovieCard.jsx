@@ -7,12 +7,6 @@ const MovieCard = (props) => {
 
   const navigate = useNavigate();
 
-  // const getConfigurations = () => {
-  //   axios
-  //     .get(`${BASE_URL}/configuration?api_key=${API_KEY}`)
-  //     .then((response) => console.log(response));
-  // };
-
   const completeDate = new Date(movie.release_date)
     .toDateString()
     .toUpperCase();

@@ -66,10 +66,10 @@ export const MovieDetails = styled.div`
       font-weight: 700;
       font-size: 32px;
 
-      overflow: hidden; // Removendo barra de rolagem
-      text-overflow: ellipsis; // Adicionando "..." ao final
+      overflow: hidden;
+      text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 1; // Quantidade de linhas
+      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
 
@@ -77,6 +77,7 @@ export const MovieDetails = styled.div`
       margin-top: 8px;
       margin-bottom: 16px;
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
       > p {
         margin: 0;
@@ -84,12 +85,12 @@ export const MovieDetails = styled.div`
         font-size: 18px;
       }
 
-      @media (max-width: 850px) {
+      /* @media (max-width: 850px) {
       }
       @media (max-width: 550px) {
         flex-direction: column;
         gap: 10px;
-      }
+      } */
     }
 
     > section {
@@ -113,11 +114,12 @@ export const MovieDetails = styled.div`
     #overview {
       text-align: justify;
 
-      overflow: hidden; // Removendo barra de rolagem
-      text-overflow: ellipsis; // Adicionando "..." ao final
+      overflow: hidden;
+      text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 5; // Quantidade de linhas
+      -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
+
       @media (max-width: 850px) {
         overflow: visible;
         display: -webkit-box;
@@ -156,11 +158,42 @@ export const MovieDetails = styled.div`
     }
   }
 
-  > img {
+  #poster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 383px;
+    height: 574px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-color: #ffffff11;
+    border-radius: 8px;
+    @media (max-width: 850px) {
+      min-width: 300px;
+      height: 490px;
+    }
+    @media (max-width: 550px) {
+      min-width: 186px;
+      height: 279px;
+    }
+    > img {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      border-radius: 8px;
+      @media (max-width: 850px) {
+        width: 300px;
+        height: 490px;
+      }
+      @media (max-width: 550px) {
+        width: 186px;
+        height: 279px;
+      }
+    }
+  }
+  /* > img {
     max-width: 383px;
 
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 8px;
 
     @media (max-width: 850px) {
       max-width: 300px;
@@ -168,7 +201,7 @@ export const MovieDetails = styled.div`
     @media (max-width: 550px) {
       max-width: 186px;
     }
-  }
+  } */
 `;
 
 export const CastContainer = styled.div`
@@ -207,6 +240,10 @@ export const TrailerContainer = styled.div`
   > iframe {
     width: 907px;
     height: 510px;
+    @media (max-width: 1000px) {
+      width: 600px;
+      height: 400px;
+    }
     @media (max-width: 850px) {
       width: 300px;
       height: 200px;

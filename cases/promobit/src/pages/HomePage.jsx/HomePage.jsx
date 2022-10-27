@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
+import Header from "../../components/Header/Header";
+import MovieCard from "../../components/MovieCard/MovieCard";
+import { CircularProgress } from "@mui/material";
+
 import {
-  A,
-  Apage,
   CategoriesContainer,
   FilterContainer,
   MoviesContainer,
   Pagination,
 } from "./styled";
-import Header from "../../components/Header/Header";
-import axios from "axios";
+
 import { BASE_URL, API_KEY, LANGUAGE } from "../../constants/constants";
+
 import x from "../../assets/x-button.svg";
 import next from "../../assets/next-page.svg";
-import MovieCard from "../../components/MovieCard/MovieCard";
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -21,7 +24,7 @@ const HomePage = () => {
 
   const pathParams = useParams();
 
-  const [page, setPage] = useState(Number(pathParams.page) || 1);
+  const [page, setPage] = useState();
   const [pages, setPages] = useState([]);
 
   const limitPage = 500;
@@ -32,8 +35,9 @@ const HomePage = () => {
 
   useEffect(() => {
     getCategories();
-    getPopularMovies();
-  }, []);
+    getPopularMovies(Number(pathParams.page) || 1);
+    setPage(Number(pathParams.page) || 1);
+  }, [pathParams.page]);
 
   const getPopularMovies = (pageNumber = page) => {
     axios
@@ -43,7 +47,6 @@ const HomePage = () => {
       .then((response) => {
         const newMoviesList = response.data.results;
         setMoviesList(newMoviesList);
-        console.log(response.data);
         getPages(pageNumber);
       })
       .catch((error) => console.log(error.message));
@@ -55,13 +58,11 @@ const HomePage = () => {
       newPages.push(index);
     }
     setPages(newPages);
-    console.log(newPages);
   };
 
   const changePage = (page) => {
-    navigate(`/${page}`);
     window.scroll(0, 500);
-    setMoviesList([]);
+    navigate(`/${page}`);
     setPage(page);
     getPopularMovies(page);
   };
@@ -79,7 +80,6 @@ const HomePage = () => {
           };
         });
         setCategories(newCategories);
-        console.log(newCategories);
       })
       .catch((error) => console.log(error.message));
   };
@@ -116,49 +116,62 @@ const HomePage = () => {
         <h1>Milhões de filmes, séries e pessoas para descobrir. Explore já</h1>
         <p>FILTER BY:</p>
         <CategoriesContainer>
-          {categories.length > 0
-            ? categories.map((category) => {
-                if (category.selected) {
-                  return (
-                    <button disabled id="selected" key={category.id}>
-                      <p>{category.name}</p>
-                      <img
-                        onClick={() => onClickCategory(category.id)}
-                        src={x}
-                        alt="exclude"
-                      />
-                    </button>
-                  );
-                } else {
-                  return (
-                    <button
-                      id="unSelected"
+          {categories.length > 0 ? (
+            categories.map((category) => {
+              if (category.selected) {
+                return (
+                  <button disabled id="selected" key={category.id}>
+                    <p>{category.name}</p>
+                    <img
                       onClick={() => onClickCategory(category.id)}
-                      key={category.id}
-                    >
-                      <p>{category.name}</p>
-                    </button>
-                  );
-                }
-              })
-            : null}
+                      src={x}
+                      alt="exclude"
+                    />
+                  </button>
+                );
+              } else {
+                return (
+                  <button
+                    id="unSelected"
+                    onClick={() => onClickCategory(category.id)}
+                    key={category.id}
+                  >
+                    <p>{category.name}</p>
+                  </button>
+                );
+              }
+            })
+          ) : (
+            <CircularProgress />
+          )}
         </CategoriesContainer>
       </FilterContainer>
       {categoriesFilter.length > 0 ? (
         <MoviesContainer>
           {moviesList.length > 0 ? (
-            moviesList
-              .filter((movie) => {
-                for (const genre of movie.genre_ids) {
-                  if (categoriesFilter.includes(genre)) {
-                    return true;
-                  }
+            moviesList.filter((movie) => {
+              for (const genre of movie.genre_ids) {
+                if (categoriesFilter.includes(genre)) {
+                  return true;
                 }
-                return false;
-              })
-              .map((movie) => <MovieCard movie={movie} key={movie.id} />)
+              }
+              return false;
+            }).length > 0 ? (
+              moviesList
+                .filter((movie) => {
+                  for (const genre of movie.genre_ids) {
+                    if (categoriesFilter.includes(genre)) {
+                      return true;
+                    }
+                  }
+                  return false;
+                })
+                .map((movie) => <MovieCard movie={movie} key={movie.id} />)
+            ) : (
+              <p>Não existem filmes dessa(s) categorias na pagina atual</p>
+            )
           ) : (
-            <p>Loading</p>
+            <CircularProgress />
           )}
         </MoviesContainer>
       ) : (
